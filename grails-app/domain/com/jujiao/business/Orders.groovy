@@ -1,6 +1,6 @@
 package com.jujiao.business
 
-class Order {
+class Orders {
 
     static constraints = {
     }

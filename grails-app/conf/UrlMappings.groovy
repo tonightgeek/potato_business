@@ -1,6 +1,14 @@
+import com.jujiao.business.WechatController
+
 class UrlMappings {
 
 	static mappings = {
+
+        "/" (
+                controller: 'wechat',
+                action: 'index'
+        )
+
         "/admin/index" (
             namespace:'admin',
             controller:'index',
@@ -13,7 +21,6 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
         "500"(view:'/error')
 	}
 }
