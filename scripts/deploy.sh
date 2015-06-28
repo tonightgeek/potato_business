@@ -1,0 +1,23 @@
+#!/usr/bin/expect
+spawn ssh -p 23654 root@122.226.100.47
+set timeout 300
+expect "password*"
+send "dudu#folmos#0123456\n"
+expect "]# "
+send "ps -ef | grep tomcat | awk '{print \$2}' | xargs kill -15\n"
+expect "]# "
+send "cd /opt/software/apache-tomcat-8.0.23/webapps/ROOT\n"
+expect "]# "
+send "rm -fr *\n"
+expect "]# "
+send "cp /opt/wars/potato.war .\n"
+expect "]# "
+send "jar -xvf ./potato.war\n"
+expect "]# "
+send "rm -fr ./potato.war\n"
+expect "]# "
+send "cd /opt/software/apache-tomcat-8.0.23/bin\n"
+expect "]# "
+send "./startup.sh\n"
+expect "]# "
+send "exit\n"
