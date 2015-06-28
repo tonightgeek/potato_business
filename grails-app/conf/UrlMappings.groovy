@@ -15,6 +15,10 @@ class UrlMappings {
             action:'index'
         )
 
+        group "/admin",{
+            "/order"(controller: "order",namespace:"admin")
+        }
+
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
                 // apply constraints here

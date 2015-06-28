@@ -5,7 +5,7 @@ class IndexController {
     static namespace = "admin"
 
     def index() {
-        redirect(controller: OrderController,action: "index")
+        redirect(uri: "/admin/order")
     }
 
 
