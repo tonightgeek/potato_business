@@ -1,6 +1,10 @@
 package com.jujiao.business
 
-class OrderProcess {
+class Goods {
+
+    String goodName
+    Float price
+    String iconPath
 
     Date dateCreated
     Date lastUpdated

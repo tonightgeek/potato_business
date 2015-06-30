@@ -24,7 +24,7 @@
         <asset:stylesheet href="ace/css/ace-part2.css" class="ace-main-stylesheet"></asset:stylesheet>
     <![endif]-->
     <asset:stylesheet href="jquery/jquery.dataTables.min.css"></asset:stylesheet>
-    <!-- inline styles related to this page -->
+    <asset:stylesheet href="jquery/jquery-ui.min.css"></asset:stylesheet>
 
     <!-- ace settings handler -->
     <asset:javascript src="ace/js/ace-extra.js"></asset:javascript>
@@ -111,7 +111,8 @@
 <!--[if lte IE 8]>
 		  <asset:javascript src="ace/js/excanvas.js"></asset:javascript>
 		<![endif]-->
-<asset:javascript src="ace/js/jquery-ui.custom.js"></asset:javascript>
+%{--<asset:javascript src="ace/js/jquery-ui.custom.js"></asset:javascript>--}%
+<asset:javascript src="jquery/jquery-ui.min.js"></asset:javascript>
 <asset:javascript src="jquery/jquery.dataTables.min.js"></asset:javascript>
 
 <!-- ace scripts -->
@@ -149,5 +150,7 @@
 <asset:javascript src="ace/docs/js/language/html.js"></asset:javascript>
 <asset:javascript src="ace/docs/js/language/css.js"></asset:javascript>
 <asset:javascript src="ace/docs/js/language/javascript.js"></asset:javascript>
+<asset:javascript src="admin/common.js"></asset:javascript>
+<input type="hidden" id="applicationContext" value="${request.contextPath}"/>
 </body>
 </html>

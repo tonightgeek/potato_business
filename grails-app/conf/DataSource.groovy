@@ -23,8 +23,9 @@ environments {
             driverClassName = 'com.mysql.jdbc.Driver'
             username = 'root'
             password = ''
-            url = 'jdbc:mysql://localhost:3306/potato'
-            dbCreate = 'update'
+            url = 'jdbc:mysql://localhost:3306/potato?useUnicode=true&characterEncoding=UTF-8'
+//            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            dbCreate = 'validate'
         }
     }
     test {
@@ -39,7 +40,7 @@ environments {
             driverClassName = 'com.mysql.jdbc.Driver'
             username = 'root'
             password = 'dudu#folmos#0123456'
-            url = 'jdbc:mysql://10.4.20.140:3306/potato'
+            url = 'jdbc:mysql://10.4.20.140:3306/potato?useUnicode=true&characterEncoding=UTF-8'
             dbCreate = 'update'
         }
     }

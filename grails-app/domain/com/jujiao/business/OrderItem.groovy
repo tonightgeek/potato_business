@@ -3,11 +3,16 @@ package com.jujiao.business
 class OrderItem {
 
     String orderName
-    String orderDescription
     Double itemPrice
-
+    Orders order
+    Date dateCreated
+    Date lastUpdated
 
 
     static constraints = {
+    }
+
+    static mapping = {
+        autoTimestamp true
     }
 }

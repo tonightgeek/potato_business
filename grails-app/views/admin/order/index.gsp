@@ -15,20 +15,31 @@
     <div class="row">
         <div class="col-xs-12">
             <div id="sample-table-2_wrapper" class="dataTables_wrapper form-inline no-footer">
-                <div class="row">
+                <div class="row" >
                     <div class="col-xs=12">
                         <label style="padding-left: 10px;">
                             下单时间
-                                <input class="form-control input-sm" style="width:100px;" type="search" placeholder=""></input>
+                                <input id="orderTimeStart" style="width:100px;" class="form-control input-sm" style="width:100px;" type="text" placeholder=""></input>
+                                <div id="orderTimeStartDatePicker" style="position: absolute;z-index:1000"></div>
                             至
-                                <input class="form-control" style="width:100px;" type="search" placeholder=""></input>
+                                <input id="orderTimeEnd" style="width:100px;" class="form-control" style="width:100px;" type="text" placeholder="" ></input>
+                                <div id="orderTimeEndDatePicker" style="position: absolute;z-index:1000"></div>
                         </label>
 
                         <button class="btn btn-primary btn-sm">搜索</button>
                     </div>
                 </div>
-                <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample-table-2_info">
-
+                <table id="order-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample-table-2_info">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>联系人</th>
+                            <th>联系地址</th>
+                            <th>总价</th>
+                            <th>上门时间</th>
+                            <th>下单时间</th>
+                        </tr>
+                    </thead>
                 </table>
             </div>
         </div>
