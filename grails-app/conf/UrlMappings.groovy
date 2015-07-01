@@ -18,7 +18,7 @@ class UrlMappings {
         group "/admin",{
             "/order"(controller: "order",namespace:"admin")
             "/order/$action"(controller: "order",namespace:"admin")
-
+            "/goods/$action"(controller: "goods",namespace:"admin")
         }
 
         "/$controller/$action?/$id?(.$format)?"{

@@ -26,7 +26,16 @@
                                 <div id="orderTimeEndDatePicker" style="position: absolute;z-index:1000"></div>
                         </label>
 
-                        <button class="btn btn-primary btn-sm">搜索</button>
+                        <label style="padding-left: 10px;">
+                            配送时间
+                            <input id="sendTimeStart" style="width:100px;" class="form-control input-sm" style="width:100px;" type="text" placeholder=""></input>
+                            <div id="sendTimeStartDatePicker" style="position: absolute;z-index:1000"></div>
+                            至
+                            <input id="sendTimeEnd" style="width:100px;" class="form-control" style="width:100px;" type="text" placeholder="" ></input>
+                            <div id="sendTimeEndDatePicker" style="position: absolute;z-index:1000"></div>
+                        </label>
+
+                        <button class="btn btn-primary btn-sm" id="search-table-button">搜索</button>
                     </div>
                 </div>
                 <table id="order-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample-table-2_info">
@@ -36,7 +45,7 @@
                             <th>联系人</th>
                             <th>联系地址</th>
                             <th>总价</th>
-                            <th>上门时间</th>
+                            <th>配送时间</th>
                             <th>下单时间</th>
                         </tr>
                     </thead>

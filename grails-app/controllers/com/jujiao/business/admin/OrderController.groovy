@@ -26,6 +26,20 @@ class OrderController {
         }
 
         def detachedCriteria = new DetachedCriteria(Orders)
+
+
+        if (params.startOrderTime) {
+            detachedCriteria = detachedCriteria.build {
+                ge "dateCreated", new Date(params.startOrderTime)
+            }
+        }
+
+        if (params.endOrderTime) {
+            detachedCriteria = detachedCriteria.build {
+                ge "dateCreated", new Date(params.startOrderTime)
+            }
+        }
+
         if (params.startSendTime) {
             detachedCriteria = detachedCriteria.build {
                 ge "sendDate", new Date(params.startSendTime)
