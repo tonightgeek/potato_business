@@ -69,7 +69,7 @@
 
         <ul class="nav nav-list">
             <li class="active">
-                <a href="index.html">
+                <a href="${request.contextPath}/admin/order/index">
                     <i class="menu-icon fa fa-tachometer"></i>
                     <span class="menu-text"> 订单管理 </span>
                 </a>
@@ -78,7 +78,7 @@
             </li>
 
             <li class="">
-                <a href="gallery.html">
+                <a href="${request.contextPath}/admin/goods/index">
                     <i class="menu-icon fa fa-picture-o"></i>
                     <span class="menu-text"> 菜品管理 </span>
                 </a>
