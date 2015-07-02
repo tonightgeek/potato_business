@@ -100,3 +100,7 @@ function initTable(tableId) {
             ]
         });
 }
+
+function editGoods(code) {
+
+}

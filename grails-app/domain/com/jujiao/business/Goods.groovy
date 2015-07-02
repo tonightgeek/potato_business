@@ -20,6 +20,7 @@ class Goods {
 
     static constraints = {
         sendScope nullable: true,blank: true
+        iconPath nullable: true,blank: true
     }
 
     static mapping = {

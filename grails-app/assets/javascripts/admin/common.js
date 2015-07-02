@@ -15,6 +15,16 @@ function isEmpty(content) {
     else {
         return false;
     }
+}
 
+function clearElementsValue(eles) {
+    for(var i =0;i<eles.length;i++) {
+        $("#" + eles[i]).val("");
+    }
+}
 
+function setElementsValue(eles,values) {
+    for(var i =0;i<eles.length;i++) {
+        $("#" + eles[i]).val(values[i]);
+    }
 }

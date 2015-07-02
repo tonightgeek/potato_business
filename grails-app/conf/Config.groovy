@@ -115,6 +115,8 @@ environments {
                     'org.hibernate',
                     'net.sf.ehcache.hibernate'
         }
+
+        goods.img.path = "/Users/sunsam/Documents/images"
     }
     production {
         grails.logging.jul.usebridge = false

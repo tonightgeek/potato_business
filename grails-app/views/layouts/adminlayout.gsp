@@ -113,30 +113,8 @@
 		<![endif]-->
 %{--<asset:javascript src="ace/js/jquery-ui.custom.js"></asset:javascript>--}%
 <asset:javascript src="jquery/jquery-ui.min.js"></asset:javascript>
+<asset:javascript src="jquery/jquery.form.min.js"></asset:javascript>
 <asset:javascript src="jquery/jquery.dataTables.min.js"></asset:javascript>
-
-<!-- ace scripts -->
-<asset:javascript src="ace/js/ace/elements.scroller.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.colorpicker.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.fileinput.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.typeahead.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.wysiwyg.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.spinner.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.treeview.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.wizard.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/elements.aside.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.ajax-content.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.touch-drag.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.sidebar.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.sidebar-scroll-1.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.submenu-hover.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.widget-box.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.settings.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.settings-rtl.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.settings-skin.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.widget-on-reload.js"></asset:javascript>
-<asset:javascript src="ace/js/ace/ace.searchbox-autocomplete.js"></asset:javascript>
 
 
 <!-- the following scripts are used in demo only for onpage help and you don't need them -->
