@@ -25,4 +25,24 @@ class WechatController {
     def refreshAccessToken() {
         wechatService.refreshAccessToken()
     }
+
+    def generateMenu() {
+        def menus = """{
+    "button": [
+        {
+            "type": "view",
+            "name": "我要订餐",
+            "url": "http://sales.dodopotato.com/web/main.html"
+        }
+    ]
+}"""
+        withHttp(uri:"https://api.weixin.qq.com"){
+            def jsonObject = post(path:'/cgi-bin/menu/create',query:[access_token:wechatService.getAccessToken()],
+                body:menus)
+            if (jsonObject.errcode.toInteger() == 0) {
+
+            }
+        }
+        render "ok"
+    }
 }

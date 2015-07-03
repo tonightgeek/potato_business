@@ -32,4 +32,7 @@ class WechatService {
     public String getAccessToken(String accessToken=''){
         this.refreshAccessToken(accessToken)
     }
+
+
+
 }
