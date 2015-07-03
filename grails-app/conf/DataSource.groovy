@@ -41,7 +41,7 @@ environments {
             username = 'root'
             password = 'dudu#folmos#0123456'
             url = 'jdbc:mysql://10.4.20.140:3306/potato?useUnicode=true&characterEncoding=UTF-8'
-            dbCreate = 'update'
+            dbCreate = 'validate'
         }
     }
 }
