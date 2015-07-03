@@ -87,6 +87,25 @@ grails.hibernate.osiv.readonly = false
 
 grails.assets.bundle=true
 
+grails.cache.config={
+    cache {
+        name 'web'
+    }
+    cache{
+        name 'admin'
+    }
+}
+
+wechat.config.appid ='wx41da4b26290dfe78'
+wechat.config.secret = '3a171ff741bd914aaf2e94c3d741cca5'
+grails.rest.injectInto = ['Controller','Service','com.jujiao.business.common.WechatUtils']
+
+
+quartz {
+    autoStartup = true
+    jdbcStore = false
+}
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -113,8 +132,14 @@ environments {
                     'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
                     'org.springframework',
                     'org.hibernate',
-                    'net.sf.ehcache.hibernate'
+                    'net.sf.ehcache.hibernate',
+                    'grails.app.jobs'
         }
+
+        quartz {
+            autoStartup = true
+        }
+
 
         goods.img.path = "/Users/sunsam/Documents/images"
     }
@@ -143,7 +168,8 @@ environments {
                     'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
                     'org.springframework',
                     'org.hibernate',
-                    'net.sf.ehcache.hibernate'
+                    'net.sf.ehcache.hibernate',
+                    'grails.app.jobs'
         }
     }
 }

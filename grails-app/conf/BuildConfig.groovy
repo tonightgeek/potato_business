@@ -70,6 +70,9 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.4.0"
 //        runtime ":jquery:1.11.1"
         compile ":asset-pipeline:2.3.7"
+        compile ":quartz:1.0.2"
+        compile ":rest:0.8"
+        compile ":cache:1.1.8"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"

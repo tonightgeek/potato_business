@@ -78,7 +78,8 @@
             </li>
 
             <li class="">
-                <a href="${request.contextPath}/admin/goods/index">
+                <a href="${request.contextPath}/admin/goods
+                /index">
                     <i class="menu-icon fa fa-picture-o"></i>
                     <span class="menu-text"> 菜品管理 </span>
                 </a>

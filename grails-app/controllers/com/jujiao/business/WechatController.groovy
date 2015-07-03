@@ -7,6 +7,8 @@ class WechatController {
 
     private static final log = LogFactory.getLog(this)
 
+    def wechatService
+
     def index() {
         log.error("enter index2")
         for(String param : request.getParameterNames()){
@@ -18,5 +20,9 @@ class WechatController {
 //            response.writer.write(request.getParameter("echostr"))
             render(request.getParameter("echostr"),contentType: "text/plain",encoding: "utf-8")
         }
+    }
+
+    def refreshAccessToken() {
+        wechatService.refreshAccessToken()
     }
 }
