@@ -9,5 +9,6 @@ class OrderDto {
     String address
     String dateCreated
     String sendDate
+    String orderStatus
     List<OrderItemDto> orderItemDtoList
 }

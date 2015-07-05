@@ -22,7 +22,7 @@
                                 <input id="orderTimeStart" style="width:100px;" class="form-control input-sm" style="width:100px;" type="text" placeholder=""></input>
                                 <div id="orderTimeStartDatePicker" style="position: absolute;z-index:1000"></div>
                             至
-                                <input id="orderTimeEnd" style="width:100px;" class="form-control" style="width:100px;" type="text" placeholder="" ></input>
+                                <input id="orderTimeEnd" style="width:100px;" class="form-control" style="width:100px;" type="text" placeholder="" ></input>;pe
                                 <div id="orderTimeEndDatePicker" style="position: absolute;z-index:1000"></div>
                         </label>
 
@@ -47,12 +47,65 @@
                             <th>总价</th>
                             <th>配送时间</th>
                             <th>下单时间</th>
+                            <th>订单状态</th>
                         </tr>
                     </thead>
                 </table>
             </div>
         </div>
     </div>
+
+<div title="创建订单" id="create-order-dialog" style="display: none;">
+    <form method="post" action="${request.contextPath}/admin/goods/save" class="form-horizontal" id="goods-edit-form">
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="create-order-order-contact">联系人</label>
+            <div class="col-sm-6">
+                <input type="text" name="price" id="create-order-order-contact" placeholder="联系人" class="col-sm-12"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="create-order-order-phone">联系电话</label>
+            <div class="col-sm-6">
+                <input type="text" name="price" id="create-order-order-phone" placeholder="联系电话" class="col-sm-12"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="create-order-order-address">配送地址</label>
+            <div class="col-sm-6">
+                <input type="text" name="price" id="create-order-order-address" placeholder="配送地址" class="col-sm-12"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="create-order-send-time">配送时间</label>
+            <div class="col-sm-6">
+                <input type="text" name="price" id="create-order-send-time" placeholder="配送地址" class="col-sm-12"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="create-order-remark">订单备注</label>
+            <div class="col-sm-6">
+                <textarea style="height: 100px;" name="description" class="form-control" id="create-order-remark"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-12" id="goods-list">
+        </div>
+        <div class="col-sm-12" style="text-align: center;">
+            <button class="btn btn-success btn-block" id="select-goods-button">选择商品</button>
+        </div>
+    </form>
+</div>
+
+<div title="选择商品" id="select-goods-dialog" style="display: none;">
+    <table id="goods-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample-table-2_info">
+        <thead>
+        <tr>
+            <th>商品名</th>
+            <th>销售价格</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+</div>
 
 </body>
 </html>

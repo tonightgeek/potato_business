@@ -1,8 +1,9 @@
 $(document).ready(
     function() {
-        var table = initTable("order-table");
+        var table = initTable("order-table"),
 
-        var startDatePicker = $("#orderTimeStartDatePicker").datepicker({
+
+        startDatePicker = $("#orderTimeStartDatePicker").datepicker({
             onSelect:function(date,datePicker){
                 $("#orderTimeStart").val(date);
                 $(this).hide();
@@ -30,6 +31,8 @@ $(document).ready(
             }
         }).hide();
 
+        $("#goods-edit-form").ajaxForm();
+
         $("#orderTimeStart").click(function() {
             startDatePicker.show();
 
@@ -50,6 +53,50 @@ $(document).ready(
                 table = initTable("order-table");
             }
         );
+
+        $("#create-order-dialog").dialog({
+            modal:true,
+            width:500,
+            buttons:[{
+                text:"修改商品",
+                click:function() {
+                    //$("#goods-edit-form").ajaxSubmit({
+                    //    success:function(data) {
+                    //        if(data.result.name=="SUCCESS"){
+                    //            $("#edit-goods-dialog").dialog("close");
+                    //            $("#goods-table").dataTable().fnDestroy();
+                    //            initTable("goods-table");
+                    //        }
+                    //        else {
+                    //            alert("修改数据错误，请重新尝试");
+                    //        }
+                    //    }
+                    //});
+                }
+            },{
+                text:"关闭",
+                click:function(){
+                    $(this).dialog("close");
+                }
+            }]
+        }).show();
+
+        $("#select-goods-dialog").dialog({
+            modal:true,
+            width:500,
+            buttons:[{
+                text:"关闭",
+                click:function(){
+                    $(this).dialog("close");
+                }
+            }]
+        }).hide();
+
+
+        $("#select-goods-button").click(function(event) {
+            $("#select-goods-dialog").dialog("show");
+            event.preventDefault();
+        });
     }
 );
 
@@ -96,11 +143,9 @@ function initTable(tableId) {
                 {"data":"address","searchable":false,orderable:false},
                 {"data":"totalPrice","searchable":false},
                 {"data":"sendDate","searchable":false},
-                {"data":"dateCreated","searchable":false}
+                {"data":"dateCreated","searchable":false},
+                {"data":"orderStatus","searchable":false}
             ]
         });
 }
 
-function editGoods(code) {
-
-}

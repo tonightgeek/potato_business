@@ -1,9 +1,13 @@
 package com.jujiao.business
 
+
 class OrderItem {
 
     String orderName
-    Double itemPrice
+    int count
+    Double totalPrice
+    Goods goods
+
     Orders order
     Date dateCreated
     Date lastUpdated
@@ -13,6 +17,5 @@ class OrderItem {
     }
 
     static mapping = {
-        autoTimestamp true
     }
 }
