@@ -4,9 +4,13 @@ class Member {
 
     String mobile
     String address
-    String uniqueId
-    String firstName
-    String lastName
+    String unionId
+    String userName
+
+    String city
+    String province
+    MemberSex memberSex
+
     boolean isValid = true
 
 
@@ -14,12 +18,19 @@ class Member {
     Date dateCreated
     Date lastUpdated
 
+    public enum MemberSex {
+        MALE,FEMALE,UNKNOWN
+    }
+
     public enum MemberSource {
         CALL_CENTER,WECHAT
     }
 
     static constraints = {
-        uniqueId nullable: true,blank: true
+        unionId nullable: true,blank: true
+        city nullable: true,blank: true
+        province nullable: true,blank: true
+        memberSex nullable: true,blank: true
     }
 
     static mapping = {

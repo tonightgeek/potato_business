@@ -2,12 +2,15 @@ package com.jujiao.business
 
 import org.apache.commons.logging.LogFactory
 
+import java.text.MessageFormat
+
 
 class WechatController {
 
     private static final log = LogFactory.getLog(this)
 
     def wechatService
+    def cookieService
 
     def index() {
         log.error("enter index2")
@@ -44,5 +47,18 @@ class WechatController {
             }
         }
         render "ok"
+    }
+
+    def authRedirectUrl() {
+        if (params.code) {
+            withHttp(uri: "https://api.weixin.qq.com"){
+                def response = get(path:'/sns/oauth2/access_token',query:[appid:grailsApplication.config.wechat.config.appid,
+                                                           secret:grailsApplication.config.wechat.config.secret,
+                                                        code:params.code,grant_type:'authorization_code'])
+                cookieService.setCookie("unionid",response.unionid)
+                cookieService.setCookie("openid",response.openid)
+                redirect(controller: "index",controllerNamespace:'wechat',action: "index")
+            }
+        }
     }
 }

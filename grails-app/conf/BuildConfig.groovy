@@ -71,6 +71,7 @@ grails.project.dependency.resolution = {
         compile ":asset-pipeline:2.3.7"
         compile ":quartz:1.0.2"
         compile ":rest:0.8"
+        compile ':cookie:1.4'
         compile ":cache:1.1.8"
 
         // Uncomment these to enable additional asset-pipeline capabilities
