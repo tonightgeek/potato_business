@@ -1,5 +1,3 @@
-import com.jujiao.business.WechatController
-
 class UrlMappings {
 
 	static mappings = {
@@ -11,7 +9,7 @@ class UrlMappings {
 
         "/admin/index" (
             namespace:'admin',
-            controller:'index',
+            controller:'main',
             action:'index'
         )
 
@@ -20,6 +18,8 @@ class UrlMappings {
             "/order/$action"(controller: "order",namespace:"admin")
             "/goods/$action"(controller: "goods",namespace:"admin")
         }
+
+        "/web/$action"(namespace:'wechat',controller: 'main')
 
         "/$controller/$action?/$id?(.$format)?"{
             constraints {

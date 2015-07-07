@@ -2,7 +2,7 @@ package com.jujiao.business.wechat
 
 import java.text.MessageFormat
 
-class IndexController {
+class MainController {
 
     static namespace = "wechat"
     def cookieService
@@ -17,8 +17,7 @@ class IndexController {
     }
 
     def index() {
-        redirect(uri: "/wechat/index")
-
+        render("/wechat/index")
     }
 
 

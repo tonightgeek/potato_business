@@ -2,9 +2,6 @@ package com.jujiao.business
 
 import org.apache.commons.logging.LogFactory
 
-import java.text.MessageFormat
-
-
 class WechatController {
 
     private static final log = LogFactory.getLog(this)
@@ -34,13 +31,13 @@ class WechatController {
     "button": [
         {
             "type": "view",
-            "name": "我要订餐",
-            "url": "http://sales.dodopotato.com/web/main.html"
+            "name": "我要订餐1",
+            "url": "http://sales.dodopotato.com/potato_business/web/index"
         }
     ]
 }"""
         withHttp(uri:"https://api.weixin.qq.com"){
-            def jsonObject = post(path:'/cgi-bin/menu/create',query:[access_token:wechatService.getAccessToken()],
+            def jsonObject = post(path:'/cgi-bin/menu/create',query:[access_token:wechatService.refreshAccessToken()],
                 body:menus)
             if (jsonObject.errcode.toInteger() == 0) {
 
@@ -51,14 +48,20 @@ class WechatController {
 
     def authRedirectUrl() {
         if (params.code) {
+            log.error('get paramscode' + params.code)
             withHttp(uri: "https://api.weixin.qq.com"){
+                log.error('start get union id')
                 def response = get(path:'/sns/oauth2/access_token',query:[appid:grailsApplication.config.wechat.config.appid,
                                                            secret:grailsApplication.config.wechat.config.secret,
                                                         code:params.code,grant_type:'authorization_code'])
                 cookieService.setCookie("unionid",response.unionid)
                 cookieService.setCookie("openid",response.openid)
-                redirect(controller: "index",controllerNamespace:'wechat',action: "index")
+                log.error('unionid==='+response.unionid+'openid'+response.openid)
+                redirect(controller: "main",controllerNamespace:'wechat',action: "index")
             }
+        }
+        else {
+            log.error('error get params code')
         }
     }
 }

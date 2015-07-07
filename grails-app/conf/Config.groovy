@@ -100,8 +100,8 @@ wechat.config.appid ='wx41da4b26290dfe78'
 wechat.config.secret = '3a171ff741bd914aaf2e94c3d741cca5'
 wechat.config.token= 'samsunpotato'
 weixin.oauth2.url='https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_userinfo&state=xiaoquwuyou#wechat_redirect'
-weixin.oauth2.redirectUri='http://sales.potato.com/'
 weixin.oauth2.accesstoken.url="https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code"
+weixin.oauth2.redirectUri='http://sales.dodopotato.com/potato_business/web/authRedirectUrl'
 
 grails.rest.injectInto = ['Controller','Service','com.jujiao.business.common.WechatUtils']
 
@@ -146,6 +146,7 @@ environments {
         }
 
 
+
         goods.img.path = "/Users/sunsam/Documents/images"
     }
     production {
@@ -175,6 +176,12 @@ environments {
                     'org.hibernate',
                     'net.sf.ehcache.hibernate',
                     'grails.app.jobs'
+
+            quartz {
+                autoStartup = true
+            }
+
+            goods.img.path = "/opt/files"
         }
     }
 }

@@ -24,7 +24,8 @@ class WechatService {
                     appid:appId,
                     secret:appSecret
             ])
-            return jsonObject.access_token
+            accessToken = jsonObject.access_token
+            return accessToken
         }
     }
 
