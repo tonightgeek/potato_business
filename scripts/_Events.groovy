@@ -9,11 +9,13 @@ eventStatusFinal = {
             port:'23654',
             remoteTodir:"root@122.226.100.47:/opt/wars/potato.war",
             password:"dudu#folmos#0123456")
-
-    def process = "/Users/sunsam/workspace/potato/potato_business/scripts/deploy.sh".execute()
-    process.waitFor()
-    process.in.eachLine { line ->
-        println line
-    }
-    println 'deploy script successful'
+//    println 'start'
+//    def process = "/Users/sunsam/workspace/potato/potato_business/scripts/deploy.sh".execute()
+//    println 'start2'
+//    process.waitFor()
+//    println 'start3'
+//    process.in.eachLine { line ->
+//        println line
+//    }
+//    println 'deploy script successful'
 }

@@ -9,7 +9,7 @@ class WechatRefreshJob {
     private static final log = LogFactory.getLog(this)
 
     static triggers = {
-      simple startDelay: 60000l, repeatInterval: 7200000l // execute job once in 5 seconds
+      simple startDelay: 60000l, repeatInterval: 1800000l // execute job once in 5 seconds
     }
 
     def execute() {

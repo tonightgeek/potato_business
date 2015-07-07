@@ -1,6 +1,7 @@
 package com.jujiao.business
 
 import org.apache.commons.logging.LogFactory
+import static groovyx.net.http.ContentType.JSON
 
 class WechatController {
 
@@ -10,7 +11,6 @@ class WechatController {
     def cookieService
 
     def index() {
-        log.error("enter index2")
         for(String param : request.getParameterNames()){
             log.error("parameters--"+param+":"+request.getParameter(param))
         }
@@ -31,8 +31,8 @@ class WechatController {
     "button": [
         {
             "type": "view",
-            "name": "我要订餐1",
-            "url": "http://sales.dodopotato.com/potato_business/web/index"
+            "name": "我要订餐",
+            "url": "http://sales.dodopotato.com/web/index"
         }
     ]
 }"""
@@ -49,14 +49,27 @@ class WechatController {
     def authRedirectUrl() {
         if (params.code) {
             log.error('get paramscode' + params.code)
-            withHttp(uri: "https://api.weixin.qq.com"){
+            def accessToken,openId
+            withHttp(uri: "https://api.weixin.qq.com",contentType: JSON){
                 log.error('start get union id')
                 def response = get(path:'/sns/oauth2/access_token',query:[appid:grailsApplication.config.wechat.config.appid,
                                                            secret:grailsApplication.config.wechat.config.secret,
-                                                        code:params.code,grant_type:'authorization_code'])
-                cookieService.setCookie("unionid",response.unionid)
-                cookieService.setCookie("openid",response.openid)
-                log.error('unionid==='+response.unionid+'openid'+response.openid)
+                                                        code:params.code,grant_type:'authorization_code']){resp,html->
+                    return html
+                }
+                accessToken = response.access_token
+                openId = response.openid
+                log.error('accessToken==='+accessToken+'--openid'+openId)
+
+                response = get(path:'/sns/userinfo',query:[access_token: accessToken,
+                                                                          openid:openId,
+                                                                          lang:'zh_CN']){resp,html->
+                    log.error('resp==='+resp+'--html'+html)
+                    return html
+                }
+
+                log.error('unionid==='+unionid+'--nickname:'+nickname)
+
                 redirect(controller: "main",controllerNamespace:'wechat',action: "index")
             }
         }
