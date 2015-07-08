@@ -15,6 +15,6 @@ class OrderCommand {
     String time
     String remark
 
-    def orderItems = [:]
+    List<OrderItemCommand> orderItemCommandList = new ArrayList<OrderItemCommand>()
 
 }

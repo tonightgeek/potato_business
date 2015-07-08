@@ -78,7 +78,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="create-order-send-time">配送时间</label>
             <div class="col-sm-6">
-                <input type="text" name="price" id="create-order-send-time" placeholder="配送地址" class="col-sm-12"></input>
+                <input type="text" name="price" id="create-order-send-time" placeholder="配送时间" class="col-sm-12"></input>
             </div>
         </div>
         <div class="form-group">
@@ -87,11 +87,24 @@
                 <textarea style="height: 100px;" name="description" class="form-control" id="create-order-remark"></textarea>
             </div>
         </div>
-        <div class="col-sm-12" id="goods-list">
+        <div class="col-sm-12 widget-box">
+            <div class="widget-header widget-header-flat widget-header-small">
+                <h5 class="widget-title">商品列表</h5>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <ul class="item-list" id="goods-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="ordersHiddenDiv">
+
         </div>
         <div class="col-sm-12" style="text-align: center;">
             <button class="btn btn-success btn-block" id="select-goods-button">选择商品</button>
         </div>
+
     </form>
 </div>
 

@@ -88,11 +88,29 @@ $(document).ready(
                 text:"确定菜品",
                 click:function() {
                     var elements = $("input[id*='productCount_']");
+                    $("#goods-list").html("");
+                    var resultHtml = '',
+                        totalPrice = 0;
                     for(var i =0;i<elements.length;i++) {
-                        var e = elements[i];
-                        alert($(e).attr("id"));
-                        alert($(e).val());
+                        var e = elements[i],
+                        goodsCode = $(e).attr("id").substr($(e).attr("id").indexOf("_") + 1),
+                        goodsCount = $(e).val(),
+                        goodsPrice = $(e).parent().parent().prev().html(),
+                        goodsName = $(e).parent().parent().prev().prev().html();
+                        if(goodsCount > 0) {
+                            resultHtml += "<li class='item-orange clearfix'>"+goodsName+"<span class='pull-right'>" + goodsCount + "份&nbsp;&nbsp;"
+                            + goodsPrice +"元</span></li>";
+                            totalPrice = parseFloat(parseFloat(totalPrice) + parseFloat(goodsPrice * goodsCount)).toFixed(2);
+                        }
                     }
+
+                    if(totalPrice > 0 ) {
+                        resultHtml += "<li class='item-orange clearfix'><span class='pull-right'>总价:"
+                        + totalPrice +"元</span></li>";
+                    }
+                    $("#goods-list").html(resultHtml);
+
+                    $(this).dialog("close");
                 }
             },{
                 text:"关闭",
@@ -105,7 +123,9 @@ $(document).ready(
 
 
         $("#select-goods-button").click(function(event) {
+            $("#goods-table").dataTable().fnDestroy();
             $("#select-goods-dialog").dialog("open");
+            initGoodsTable();
             event.preventDefault();
         });
 
@@ -125,25 +145,27 @@ function initGoodsTable() {
                 {"data":"goodName","searchable":false,orderable:false},
                 {"data":"price","searchable":false,orderable:false},
                 {"data":"goodsCode","searchable":false,orderable:false,render:function(data, type, row){
-                    return "<div class='action-buttons'><a href='#' onclick=\"addProduct('" + data + "')\"><i class='ace-icon glyphicon glyphicon-plus green'></i></a>" +
-                        "<input disabled='false' type='text' style='width:50px;' value='0' id='productCount_"+data+"'></input><a href='#' onclick=\"deduceProduct('" + data + "')\"><i class='ace-icon glyphicon glyphicon-minus red'></i></a></div>";
+                    return "<div class='action-buttons'><a href='#' onclick=\"addProduct(event,'" + data + "')\"><i class='ace-icon glyphicon glyphicon-plus green'></i></a>" +
+                        "<input disabled='false' type='text' style='width:50px;' value='0' id='productCount_"+data+"'></input><a href='#' onclick=\"deduceProduct(event,'" + data + "')\"><i class='ace-icon glyphicon glyphicon-minus red'></i></a></div>";
                 }}
             ]
         }
     );
 }
 
-function addProduct(goodsCode) {
+function addProduct(event,goodsCode) {
+    var e = event;
     $("#productCount_" + goodsCode).val(parseInt($("#productCount_" + goodsCode).val())+1);
-    event.preventDefault();
+    e.preventDefault();
 }
 
-function deduceProduct(goodsCode) {
-    var count = $("#productCount_" + goodsCode).val();
+function deduceProduct(event,goodsCode) {
+    var e = event,
+    count = $("#productCount_" + goodsCode).val();
     if(parseInt(count)>0) {
         $("#productCount_" + goodsCode).val(count - 1);
     }
-    event.preventDefault();
+    e.preventDefault();
 }
 
 

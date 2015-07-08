@@ -110,8 +110,6 @@ class GoodsController {
             def goods = new Goods(goodsCode: goodsCode,
                     goodName: params.names, price: params.price, description: params.description
             )
-
-
             goods.save()
 
             def file = request.getFile('file')
