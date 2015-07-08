@@ -1,6 +1,6 @@
 $(document).ready(
     function() {
-        var table = initTable("order-table"),
+        var table = initOrderTable("order-table"),
 
 
         startDatePicker = $("#orderTimeStartDatePicker").datepicker({
@@ -50,7 +50,7 @@ $(document).ready(
         $("#search-table-button").click(
             function() {
                 $("#order-table").dataTable().fnDestroy();
-                table = initTable("order-table");
+                table = initOrderTable("order-table");
             }
         );
 
@@ -85,23 +85,69 @@ $(document).ready(
             modal:true,
             width:500,
             buttons:[{
+                text:"确定菜品",
+                click:function() {
+                    var elements = $("input[id*='productCount_']");
+                    for(var i =0;i<elements.length;i++) {
+                        var e = elements[i];
+                        alert($(e).attr("id"));
+                        alert($(e).val());
+                    }
+                }
+            },{
                 text:"关闭",
                 click:function(){
                     $(this).dialog("close");
                 }
             }]
-        }).hide();
+        });
+        $("#select-goods-dialog").dialog("close");
 
 
         $("#select-goods-button").click(function(event) {
-            $("#select-goods-dialog").dialog("show");
+            $("#select-goods-dialog").dialog("open");
             event.preventDefault();
         });
+
+        initGoodsTable();
     }
 );
 
+function initGoodsTable() {
+    $("#goods-table").dataTable(
+        {
+            "serverSide":true,
+            "searching":false,
+            "ajax": {
+                "url":getApplicationContext()+"/admin/goods/list"
+            },
+            "columns":[
+                {"data":"goodName","searchable":false,orderable:false},
+                {"data":"price","searchable":false,orderable:false},
+                {"data":"goodsCode","searchable":false,orderable:false,render:function(data, type, row){
+                    return "<div class='action-buttons'><a href='#' onclick=\"addProduct('" + data + "')\"><i class='ace-icon glyphicon glyphicon-plus green'></i></a>" +
+                        "<input disabled='false' type='text' style='width:50px;' value='0' id='productCount_"+data+"'></input><a href='#' onclick=\"deduceProduct('" + data + "')\"><i class='ace-icon glyphicon glyphicon-minus red'></i></a></div>";
+                }}
+            ]
+        }
+    );
+}
 
-function initTable(tableId) {
+function addProduct(goodsCode) {
+    $("#productCount_" + goodsCode).val(parseInt($("#productCount_" + goodsCode).val())+1);
+    event.preventDefault();
+}
+
+function deduceProduct(goodsCode) {
+    var count = $("#productCount_" + goodsCode).val();
+    if(parseInt(count)>0) {
+        $("#productCount_" + goodsCode).val(count - 1);
+    }
+    event.preventDefault();
+}
+
+
+function initOrderTable(tableId) {
     $("#"+tableId).on('preXhr.dt', function ( e, settings, data ) {
             if(data.order[0].column == 3){
                 data.sort = "totalPrice";
@@ -144,7 +190,7 @@ function initTable(tableId) {
                 {"data":"totalPrice","searchable":false},
                 {"data":"sendDate","searchable":false},
                 {"data":"dateCreated","searchable":false},
-                {"data":"orderStatus","searchable":false}
+                {"data":"orderStatus","searchable":false,ordable:false}
             ]
         });
 }

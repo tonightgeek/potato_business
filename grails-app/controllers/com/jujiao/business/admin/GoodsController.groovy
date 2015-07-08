@@ -115,7 +115,7 @@ class GoodsController {
             goods.save()
 
             def file = request.getFile('file')
-            if (file.getSize() > 0) {
+            if (file && file.getSize() > 0) {
                 def suffix = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf(".") + 1)
                 def fileName = goodsCode + "." + suffix
                 file.transferTo(new File(grailsApplication.config.goods.img.path + "/" + fileName));
