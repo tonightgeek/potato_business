@@ -117,8 +117,8 @@ class GoodsController {
 
             def file = request.getFile('file')
             if (file && file.getSize() > 0) {
-                def suffix = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf(".") + 1)
-                def fileName = goodsCode + "." + suffix
+                def suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1),
+                fileName = goodsCode + "." + suffix
                 file.transferTo(new File(grailsApplication.config.goods.img.path + "/" + fileName));
                 goods.iconPath = fileName
                 goods.save(flush:true)
@@ -135,7 +135,7 @@ class GoodsController {
     def update() {
         CommonResult<GoodsDto> results = new CommonResult<GoodsDto>()
         try {
-            goodsService.update(request,params)
+            goodsService.update(request,params,grailsApplication.config.goods.img.path)
         } catch (Exception e) {
             log.error(e)
             results.result = CommonResult.CommonResultStatus.FAIL

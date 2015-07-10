@@ -82,6 +82,7 @@ function editGoods(code) {
             success:function(data) {
                 setElementsValue(['edit-goods-name','edit-goods-price','edit-goods-description'],[data.data.goodName,data.data.price,
                 data.data.description]);
+                $("#edit-goods-img-path").attr("src", getApplicationContext()+'/'+data.data.iconPath);
                 if(data.data.status == 'ON_SALE')
                 {
                     $("#edit-status-div").html("<label><input name='goodsStatus' " +

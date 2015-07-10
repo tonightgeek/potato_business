@@ -153,7 +153,6 @@ environments {
         grails.logging.jul.usebridge = false
         log4j = {
             appenders {
-                console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 
                 rollingFile name: "logfile",
                         maxFileSize: 2048,
@@ -161,10 +160,11 @@ environments {
             }
 
             root {
-                error 'stdout','logfile'
+                error 'logfile'
             }
 
             error 'org.codehaus.groovy.grails.web.servlet',        // controllers
+                    'org.codehaus.groovy.grails',        // controllers
                     'org.codehaus.groovy.grails.web.pages',          // GSP
                     'org.codehaus.groovy.grails.web.sitemesh',       // layouts
                     'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping

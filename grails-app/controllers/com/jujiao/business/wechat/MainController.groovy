@@ -1,20 +1,14 @@
 package com.jujiao.business.wechat
 
+import org.apache.commons.logging.LogFactory
+
 import java.text.MessageFormat
 
 class MainController {
 
     static namespace = "wechat"
-    def cookieService
+    private static final log = LogFactory.getLog(this)
 
-    static beforeInterceptor = {
-        if(!cookieService.getCookie("openid")) {
-            def redirectUrl = MessageFormat.format(grailsApplication.config.weixin.oauth2.url, [grailsApplication.config.wechat.config.appid,
-                                                                                                URLEncoder.encode(grailsApplication.config.weixin.oauth2.redirectUri)].toArray())
-            redirect(url: redirectUrl)
-            return false
-        }
-    }
 
     def index() {
         render("/wechat/index")

@@ -51,7 +51,6 @@ class WechatController {
             log.error('get paramscode' + params.code)
             def accessToken,openId
             withHttp(uri: "https://api.weixin.qq.com",contentType: JSON){
-                log.error('start get union id')
                 def response = get(path:'/sns/oauth2/access_token',query:[appid:grailsApplication.config.wechat.config.appid,
                                                            secret:grailsApplication.config.wechat.config.secret,
                                                         code:params.code,grant_type:'authorization_code']){resp,html->
@@ -68,7 +67,7 @@ class WechatController {
                     return html
                 }
 
-                log.error('unionid==='+unionid+'--nickname:'+nickname)
+//                cookieService.setCookie("unionid",response.unionid)
 
                 redirect(controller: "main",controllerNamespace:'wechat',action: "index")
             }

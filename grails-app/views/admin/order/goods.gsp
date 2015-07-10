@@ -15,12 +15,10 @@
 <div class="row">
     <div class="col-xs-12">
         <div id="sample-table-2_wrapper" class="dataTables_wrapper form-inline no-footer">
-            <div class="row" >
-                <div class="col-xs=12">
-
-                    <button class="btn btn-primary btn-sm" id="search-table-button">搜索</button>
-                </div>
-            </div>
+            %{--<div class="row" >--}%
+                %{--<div class="col-xs=12">--}%
+                %{--</div>--}%
+            %{--</div>--}%
             <table id="goods-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample-table-2_info">
                 <thead>
                 <tr>
@@ -109,6 +107,11 @@
 
             <div class="col-sm-8">
                 <input type="file" name="file" id="edit-goods-image" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-8" style="text-align: center;">
+                <img src="" id="edit-goods-img-path"/>
             </div>
         </div>
         <input type="hidden" id="edit-goods-code" name="code"/>
