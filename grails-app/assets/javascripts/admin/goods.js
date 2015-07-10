@@ -40,6 +40,7 @@ $(document).ready(
             }
         );
 
+        activeMenu("goods-menu-li");
     }
 );
 

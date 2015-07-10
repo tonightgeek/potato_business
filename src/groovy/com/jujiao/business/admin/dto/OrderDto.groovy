@@ -10,5 +10,6 @@ class OrderDto {
     String dateCreated
     String sendDate
     String orderStatus
-    List<OrderItemDto> orderItemDtoList
+    String remark
+    def orderItemDtoList = [].withLazyDefault {return new OrderItemDto()}
 }

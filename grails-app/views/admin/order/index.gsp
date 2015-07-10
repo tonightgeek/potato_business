@@ -48,6 +48,8 @@
                             <th>配送时间</th>
                             <th>下单时间</th>
                             <th>订单状态</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                 </table>
@@ -84,7 +86,7 @@
                 <a href="#">
                     <i class="ace-icon fa fa-pencil bigger-130" onclick="changeMemberInfo('memberAddress')"></i>
                 </a>
-                <input type="hidden" id="#create-order-dialog" name="shouldChangeMemberAddress" value="false"></input>
+                <input type="hidden" id="change-member-contract-address" name="shouldChangeMemberAddress" value="false"></input>
             </div>
         </div>
         <div class="form-group">
@@ -127,6 +129,60 @@
         </tr>
         </thead>
     </table>
+</div>
+
+
+<div title="订单详情" id="order-detail-dialog" style="display: none;">
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">联系电话</label>
+            <span class="col-sm-6 green" id="view-order-phone">
+                18621607094
+            </span>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">联系人</label>
+            <span class="col-sm-6 green" id="view-order-username">
+                孙明辉
+            </span>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">配送地址</label>
+            <span class="col-sm-6 green" id="view-order-address">
+                孙明辉
+            </span>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">配送时间</label>
+            <span class="col-sm-6 green" id="view-order-send-time">
+                孙明辉
+            </span>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">订单备注</label>
+            <span class="col-sm-6 green" id="view-order-remark">
+            </span>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">订单状态</label>
+            <span class="col-sm-6 green" id="view-order-status">
+            </span>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">订单总价</label>
+            <span class="col-sm-6 green" id="view-order-total-price">
+            </span>
+        </div>
+        <div class="col-sm-12 widget-box">
+            <div class="widget-header widget-header-flat widget-header-small">
+                <h5 class="widget-title">商品列表</h5>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <ul class="item-list" id="view-goods-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
 </div>
 
 </body>

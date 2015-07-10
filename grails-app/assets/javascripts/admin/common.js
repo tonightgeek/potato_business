@@ -28,3 +28,10 @@ function setElementsValue(eles,values) {
         $("#" + eles[i]).val(values[i]);
     }
 }
+
+
+function activeMenu(id) {
+    $("#order-menu-li").attr("css", "");
+    $("#goods-menu-li").attr("css", "");
+    $("#" + id).attr("css", "active");
+}

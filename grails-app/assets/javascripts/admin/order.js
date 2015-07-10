@@ -1,9 +1,10 @@
 $(document).ready(
     function() {
+        activeMenu("order-menu-li");
+
         var table = initOrderTable("order-table"),
-
-
         startDatePicker = $("#orderTimeStartDatePicker").datepicker({
+            showButtonPanel:true,
             onSelect:function(date,datePicker){
                 $("#orderTimeStart").val(date);
                 $(this).hide();
@@ -18,6 +19,7 @@ $(document).ready(
         }).hide(),
 
         sendTimeStartPicker = $("#sendTimeStartDatePicker").datepicker({
+            showButtonPanel:true,
             onSelect:function(date,datePicker){
                 $("#sendTimeStart").val(date);
                 $(this).hide();
@@ -25,6 +27,7 @@ $(document).ready(
         }).hide(),
 
         sendTimeEndPicker = $("#sendTimeEndDatePicker").datepicker({
+            showButtonPanel:true,
             onSelect:function(date,datePicker){
                 $("#sendTimeEnd").val(date);
                 $(this).hide();
@@ -58,15 +61,13 @@ $(document).ready(
             modal:true,
             width:500,
             buttons:[{
-                text:"修改商品",
+                text:"下单",
                 click:function() {
                     $("#goods-create-form").ajaxSubmit({
                         success:function(data) {
                             if(data.result.name=="SUCCESS"){
-                                alert('ok');
                                 $("#create-order-dialog").dialog("close");
-                                $("#order-table").dataTable().fnDestroy();
-                                initTable("order-table");
+                                location.reload();
                             }
                             else {
                                 alert("修改数据错误，请重新尝试");
@@ -81,6 +82,18 @@ $(document).ready(
                 }
             }]
         }).show();
+
+        $("#order-detail-dialog").dialog({
+            modal:true,
+            width:500,
+            buttons:[{
+                text:"关闭",
+                click:function() {
+                    $(this).dialog("close");
+                }}
+            ]
+        });
+        $("#order-detail-dialog").dialog("close");
 
         $("#select-goods-dialog").dialog({
             modal:true,
@@ -141,6 +154,10 @@ $(document).ready(
                 $("#create-order-dialog").dialog("open");
                 clearElementsValue(['create-order-order-contact','create-order-order-phone','create-order-order-address',
                 'create-order-send-time','create-order-remark']);
+                $("#change-member-contract-name").val('false');
+                $("#change-member-contract-name").prev().attr("class","");
+                $("#change-member-contract-address").val('false');
+                $("#change-member-contract-address").prev().attr("class","");
                 $("#goods-list").html("");
             }
         );
@@ -153,12 +170,9 @@ $(document).ready(
                         text:'Loading',
                         position:'overlay'
                     });
-                    $.ajax({url:getApplicationContext()+"/admin/member/mobile",
-                            params:{
-                                mobile:$("#create-order-order-phone").val()
-                            },
-                            async:false,
-                            complete:function(data){
+                    $.getJSON(getApplicationContext()+"/admin/member/mobile",
+                        {mobile:$("#create-order-order-phone").val()},
+                            function(data){
                                 if(data.data) {
                                     $("#create-order-order-contact").val(data.data.userName);
                                     $("#create-order-order-address").val(data.data.address);
@@ -169,7 +183,6 @@ $(document).ready(
                                 }
                                 $("#create-order-dialog").parent().isLoading("hide");
                             }
-                        }
                     );
                 }
             }
@@ -258,9 +271,53 @@ function initOrderTable(tableId) {
                 {"data":"totalPrice","searchable":false},
                 {"data":"sendDate","searchable":false},
                 {"data":"dateCreated","searchable":false},
-                {"data":"orderStatus","searchable":false,ordable:false}
+                {"data":"orderStatus","searchable":false,ordable:false},
+                {"data":"code","searchable":false,render:function(data, type, row){
+                    return "<button class='btn btn-success btn-block' onclick='cancelOrder(\""+data+"\")'>取消</button>";
+                }},
+                {"data":"code","searchable":false,render:function(data, type, row){
+                    return "<button class='btn btn-success btn-block' onclick='showOrder(\""+data+"\")'>详情</button>";
+                }}
             ]
         });
+}
+
+function showOrder(orderCode) {
+    $.getJSON(getApplicationContext() + "/admin/order/get", {code: orderCode}, function (data) {
+        $("#view-order-phone").html(data.data.phone);
+        $("#view-order-username").html(data.data.contactName);
+        $("#view-order-address").html(data.data.address);
+        $("#view-order-send-time").html(data.data.sendDate);
+        $("#view-order-remark").html(data.data.remark);
+        $("#view-order-status").html(data.data.orderStatus);
+        $("#view-order-total-price").html(data.data.totalPrice);
+        var orderItemDtoList = data.data.orderItemDtoList,
+            orderItemResult = '';
+
+        for(var i=0;i<orderItemDtoList.length;i++) {
+            var orderItem = orderItemDtoList[i];
+            orderItemResult += "<li class='item-orange clearfix'>"+ orderItem.goodsName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+orderItem.count+"份"+
+            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+orderItem.totalPrice +"元</li>"
+        }
+
+        $("#view-goods-list").html(orderItemResult);
+
+        $("#order-detail-dialog").dialog("open");
+    });
+
+
+}
+
+function cancelOrder(orderCode) {
+    $.getJSON(getApplicationContext()+"/admin/order/cancelOrder",
+        {code:orderCode},
+            function(data){
+                $("#order-table").dataTable().fnDestroy();
+                initOrderTable("order-table");
+                window.location.reload();
+        }
+    );
+
 }
 
 function changeMemberInfo(specifiedField) {
@@ -275,7 +332,7 @@ function changeMemberInfo(specifiedField) {
         }
     }
     else {
-        if($("#change-member-contract-name").val()=='false' || $("#change-member-contract-name").val()){
+        if($("#change-member-contract-name").val()=='false' || !$("#change-member-contract-name").val()){
             $("#change-member-contract-name").val('true');
             $("#change-member-contract-name").prev().attr("class","blue");
         }
@@ -284,6 +341,5 @@ function changeMemberInfo(specifiedField) {
             $("#change-member-contract-name").prev().attr("class","");
         }
     }
-
 }
 

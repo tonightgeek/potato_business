@@ -3,6 +3,7 @@ package com.jujiao.business.admin
 import com.jujiao.business.Member
 import com.jujiao.business.admin.dto.MemberDto
 import com.jujiao.business.common.CommonResult
+import grails.converters.JSON
 import org.apache.commons.logging.LogFactory
 
 class MemberController {
@@ -26,6 +27,6 @@ class MemberController {
             log.error(e)
         }
 
-        return result
+        render result as JSON
     }
 }

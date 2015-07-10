@@ -2,16 +2,19 @@ package com.jujiao.business.admin
 
 import com.jujiao.business.Member
 import com.jujiao.business.admin.command.OrderCommand
+import com.jujiao.business.admin.dto.OrderItemDto
 import com.jujiao.business.common.CommonResult
 import com.jujiao.business.Orders
 import com.jujiao.business.admin.dto.OrderDto
 import grails.converters.JSON
 import grails.gorm.DetachedCriteria
+import org.apache.commons.logging.LogFactory
 
 import javax.persistence.criteria.Order
 
 class OrderController {
 
+    private static final log = LogFactory.getLog(this)
     static namespace = "admin"
 
     def orderService
@@ -94,21 +97,56 @@ class OrderController {
         List<OrderDto> orderDtoList = new ArrayList<OrderDto>(orders.size())
         try {
             orders.each { order ->
-                def orderDto = [code:order.code,totalPrice:order.totalPrice,
-                 address:order.address,phone:order.phone,dateCreated:order.dateCreated.format("yyyy-MM-dd HH:mm:ss"),
-                 sendDate:order.sendDate.format("yyyy-MM-dd HH:mm:ss"),contactName:order.contactName,orderStatus:order.orderStatus.displayValue] as OrderDto
+                def orderItemList = order.orderItem
+
+                def orderDto = [code    : order.code, totalPrice: order.totalPrice,
+                                address : order.address, phone: order.phone, dateCreated: order.dateCreated.format("yyyy-MM-dd HH:mm:ss"),
+                                sendDate: order.sendDate.format("yyyy-MM-dd HH:mm:ss"), contactName: order.contactName, orderStatus: order.orderStatus.displayValue] as OrderDto
                 orderDtoList.add(orderDto)
             }
 
             results.data = orderDtoList
-//            results.currentPage = params.page
             results.recordsTotal = totalRecords
             results.recordsFiltered = totalRecords
         }
         catch (Exception e) {
             results.result=CommonResult.CommonResultStatus.FAIL
+            log.error('list order error ',e)
         }
 
+        render results as JSON
+    }
+
+    def cancelOrder() {
+        CommonResult<Boolean> results = new CommonResult<Boolean>()
+        try {
+            def order = Orders.findByCode(params.code)
+            if (order) {
+                order.orderStatus = Orders.OrderStatus.CANCEL
+            }
+            order.save(flush: true)
+        } catch (Exception e) {
+            results.result = CommonResult.CommonResultStatus.FAIL
+            log.error('cancel order error ',e)
+        }
+        render results as JSON
+    }
+
+    def get() {
+        CommonResult<OrderDto> results = new CommonResult<OrderDto>()
+        try {
+            def order = Orders.findByCode(params.code)
+            def orderDto = [code:order.code,phone:order.phone,totalPrice:order.totalPrice,address:order.address,sendDate:order.sendDate.format("yyyy/MM/dd hh:mm:ss")
+            ,orderStatus: order.orderStatus.displayValue,contactName: order.contactName,remark:order.remark] as OrderDto
+            order.orderItem.each {
+                def orderItemDto = [goodsName:it.goods.goodName,count:it.count,totalPrice:it.totalPrice] as OrderItemDto
+                orderDto.orderItemDtoList.add(orderItemDto)
+            }
+            results.data = orderDto
+        } catch (Exception e) {
+            results.result = CommonResult.CommonResultStatus.FAIL
+            log.error('cancel order error ',e)
+        }
         render results as JSON
     }
 }

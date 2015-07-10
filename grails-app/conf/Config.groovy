@@ -149,7 +149,7 @@ environments {
 
         goods.img.path = "/Users/sunsam/Documents/images"
     }
-    production {
+    ht {
         grails.logging.jul.usebridge = false
         log4j = {
             appenders {
