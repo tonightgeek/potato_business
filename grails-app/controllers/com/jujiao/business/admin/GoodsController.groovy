@@ -79,6 +79,7 @@ class GoodsController {
         }
         catch (Exception e) {
             results.result = CommonResult.CommonResultStatus.FAIL
+            log.error(e)
         }
 
         render results as JSON
@@ -97,6 +98,7 @@ class GoodsController {
             }
         } catch (Exception e) {
             results.result = CommonResult.CommonResultStatus.FAIL
+            log.error(e)
         }
         render results as JSON
 
@@ -123,6 +125,7 @@ class GoodsController {
         }
         catch (Exception e) {
             result = "error"
+            log.error(e)
         }
 
         render result
