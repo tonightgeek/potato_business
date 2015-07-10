@@ -2,12 +2,6 @@ package com.jujiao.business.admin.command
 
 class OrderCommand {
 
-    String memberId
-    String memberFirstName
-    String memberLastName
-    String memberMobile
-    String memberAddress
-
     String orderCode
     String orderPhone
     String orderContact
@@ -15,6 +9,12 @@ class OrderCommand {
     String time
     String remark
 
-    List<OrderItemCommand> orderItemCommandList = new ArrayList<OrderItemCommand>()
+    String unionId
+    boolean shouldChangeMemberAddress
+    boolean shouldChangeMemberName
+
+    List<OrderItemCommand> orderItemCommandList = [].withLazyDefault{
+        return new OrderItemCommand()
+    }
 
 }

@@ -23,21 +23,26 @@ class OrderController {
     def save(OrderCommand orderCommand) {
         CommonResult<Boolean> results = new CommonResult<Boolean>()
         try {
-            def member = Member.get(orderCommand.getMemberId())
+            def member = Member.findByMobile(orderCommand.getOrderPhone())
             if (!member) {
-                member = new Member(mobile: orderCommand.memberMobile, address: orderCommand.memberAddress,
-                        firstName: orderCommand.memberFirstName, lastName: orderCommand.memberLastName,
+                member = new Member(mobile: orderCommand.orderPhone, address: orderCommand.orderAddress,
+                        userName:orderCommand.orderContact,
                         memberSource: Member.MemberSource.CALL_CENTER
                 ).save()
             } else {
-                member.mobile = orderCommand.memberMobile
-                member.address = orderCommand.memberAddress
-                member.firstName = orderCommand.memberFirstName
-                member.lastName = orderCommand.memberLastName
-                member.save(flush: true)
+                if (orderCommand.isShouldChangeMemberAddress()) {
+                    member.address = orderCommand.getOrderAddress()
+                }
+                if (orderCommand.isShouldChangeMemberName()) {
+                    member.userName = orderCommand.getOrderContact()
+                }
+
+                if (orderCommand.isShouldChangeMemberAddress() || orderCommand.isShouldChangeMemberName()) {
+                    member.save(flush: true)
+                }
             }
 
-            orderCommand.time = ((new Date()).format("yyyy:MM:dd")) + " " + orderCommand.getTime()
+            orderCommand.time = ((new Date()).format("yyyy/MM/dd")) + " " + orderCommand.getTime()
             orderService.saveOrder(orderCommand, member)
         } catch (Exception e) {
             results.result= CommonResult.CommonResultStatus.FAIL

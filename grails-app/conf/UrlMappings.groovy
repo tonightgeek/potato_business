@@ -17,6 +17,7 @@ class UrlMappings {
             "/order"(controller: "order",namespace:"admin")
             "/order/$action"(controller: "order",namespace:"admin")
             "/goods/$action"(controller: "goods",namespace:"admin")
+            "/member/$action"(controller: "member",namespace:"admin")
         }
 
         "/web/$action"(namespace:'wechat',controller: 'main')

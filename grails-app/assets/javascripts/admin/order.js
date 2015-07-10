@@ -31,7 +31,7 @@ $(document).ready(
             }
         }).hide();
 
-        $("#goods-edit-form").ajaxForm();
+        $("#goods-create-form").ajaxForm();
 
         $("#orderTimeStart").click(function() {
             startDatePicker.show();
@@ -60,18 +60,19 @@ $(document).ready(
             buttons:[{
                 text:"修改商品",
                 click:function() {
-                    //$("#goods-edit-form").ajaxSubmit({
-                    //    success:function(data) {
-                    //        if(data.result.name=="SUCCESS"){
-                    //            $("#edit-goods-dialog").dialog("close");
-                    //            $("#goods-table").dataTable().fnDestroy();
-                    //            initTable("goods-table");
-                    //        }
-                    //        else {
-                    //            alert("修改数据错误，请重新尝试");
-                    //        }
-                    //    }
-                    //});
+                    $("#goods-create-form").ajaxSubmit({
+                        success:function(data) {
+                            if(data.result.name=="SUCCESS"){
+                                alert('ok');
+                                $("#create-order-dialog").dialog("close");
+                                $("#order-table").dataTable().fnDestroy();
+                                initTable("order-table");
+                            }
+                            else {
+                                alert("修改数据错误，请重新尝试");
+                            }
+                        }
+                    });
                 }
             },{
                 text:"关闭",
@@ -90,7 +91,8 @@ $(document).ready(
                     var elements = $("input[id*='productCount_']");
                     $("#goods-list").html("");
                     var resultHtml = '',
-                        totalPrice = 0;
+                        totalPrice = 0,
+                        formElementHtml = '';
                     for(var i =0;i<elements.length;i++) {
                         var e = elements[i],
                         goodsCode = $(e).attr("id").substr($(e).attr("id").indexOf("_") + 1),
@@ -100,10 +102,13 @@ $(document).ready(
                         if(goodsCount > 0) {
                             resultHtml += "<li class='item-orange clearfix'>"+goodsName+"<span class='pull-right'>" + goodsCount + "份&nbsp;&nbsp;"
                             + goodsPrice +"元</span></li>";
+                            formElementHtml += "<input type='hidden' name='orderItemCommandList["+i+"].goodsName' value='"+goodsName+"'></input>";
+                            formElementHtml += "<input type='hidden' name='orderItemCommandList["+i+"].goodsCount' value='"+goodsCount+"'></input>";
+                            formElementHtml += "<input type='hidden' name='orderItemCommandList["+i+"].goodsCode' value='"+goodsCode+"'></input>";
                             totalPrice = parseFloat(parseFloat(totalPrice) + parseFloat(goodsPrice * goodsCount)).toFixed(2);
                         }
                     }
-
+                    $("#ordersHiddenDiv").html(formElementHtml);
                     if(totalPrice > 0 ) {
                         resultHtml += "<li class='item-orange clearfix'><span class='pull-right'>总价:"
                         + totalPrice +"元</span></li>";
@@ -121,7 +126,7 @@ $(document).ready(
         });
         $("#select-goods-dialog").dialog("close");
 
-
+        $("#create-order-dialog").dialog("close");
         $("#select-goods-button").click(function(event) {
             $("#goods-table").dataTable().fnDestroy();
             $("#select-goods-dialog").dialog("open");
@@ -130,6 +135,47 @@ $(document).ready(
         });
 
         initGoodsTable();
+
+        $("#create-order-button").click(
+            function() {
+                $("#create-order-dialog").dialog("open");
+                clearElementsValue(['create-order-order-contact','create-order-order-phone','create-order-order-address',
+                'create-order-send-time','create-order-remark']);
+                $("#goods-list").html("");
+            }
+        );
+
+        $("#create-order-order-phone").blur(
+            function() {
+                var mobile = $("#create-order-order-phone").val();
+                if(!isEmpty(mobile)){
+                    $("#create-order-dialog").parent().isLoading({
+                        text:'Loading',
+                        position:'overlay'
+                    });
+                    $.ajax({url:getApplicationContext()+"/admin/member/mobile",
+                            params:{
+                                mobile:$("#create-order-order-phone").val()
+                            },
+                            async:false,
+                            complete:function(data){
+                                if(data.data) {
+                                    $("#create-order-order-contact").val(data.data.userName);
+                                    $("#create-order-order-address").val(data.data.address);
+                                }
+                                else {
+                                    $("#create-order-order-contact").val("");
+                                    $("#create-order-order-address").val("");
+                                }
+                                $("#create-order-dialog").parent().isLoading("hide");
+                            }
+                        }
+                    );
+                }
+            }
+        );
+
+        $("#create-order-send-time").timepicker();
     }
 );
 
@@ -215,5 +261,29 @@ function initOrderTable(tableId) {
                 {"data":"orderStatus","searchable":false,ordable:false}
             ]
         });
+}
+
+function changeMemberInfo(specifiedField) {
+    if(specifiedField == 'memberAddress'){
+        if($("#change-member-contract-address").val()=='false' || !$("#change-member-contract-address").val()){
+            $("#change-member-contract-address").val('true');
+            $("#change-member-contract-address").prev().attr("class","blue");
+        }
+        else {
+            $("#change-member-contract-address").val('false');
+            $("#change-member-contract-address").prev().attr("class","");
+        }
+    }
+    else {
+        if($("#change-member-contract-name").val()=='false' || $("#change-member-contract-name").val()){
+            $("#change-member-contract-name").val('true');
+            $("#change-member-contract-name").prev().attr("class","blue");
+        }
+        else {
+            $("#change-member-contract-name").val('false');
+            $("#change-member-contract-name").prev().attr("class","");
+        }
+    }
+
 }
 

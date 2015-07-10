@@ -11,6 +11,7 @@
     <!-- bootstrap & fontawesome -->
     <asset:stylesheet href="ace/css/bootstrap.css" ></asset:stylesheet>
     <asset:stylesheet href="ace/css/font-awesome.css"></asset:stylesheet>
+    <asset:stylesheet href="jquery/jquery.ui.timepicker.css"></asset:stylesheet>
 
     <!-- page specific plugin styles -->
 
@@ -116,6 +117,8 @@
 <asset:javascript src="jquery/jquery-ui.min.js"></asset:javascript>
 <asset:javascript src="jquery/jquery.form.min.js"></asset:javascript>
 <asset:javascript src="jquery/jquery.dataTables.min.js"></asset:javascript>
+<asset:javascript src="waiting.js"></asset:javascript>
+<asset:javascript src="jquery/jquery.ui.timepicker.js"></asset:javascript>
 
 
 <!-- the following scripts are used in demo only for onpage help and you don't need them -->

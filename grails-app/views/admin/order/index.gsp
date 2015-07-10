@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="page-header">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" id="create-order-button">
             创建订单
         </button>
     </div>
@@ -22,7 +22,7 @@
                                 <input id="orderTimeStart" style="width:100px;" class="form-control input-sm" style="width:100px;" type="text" placeholder=""></input>
                                 <div id="orderTimeStartDatePicker" style="position: absolute;z-index:1000"></div>
                             至
-                                <input id="orderTimeEnd" style="width:100px;" class="form-control" style="width:100px;" type="text" placeholder="" ></input>;pe
+                                <input id="orderTimeEnd" style="width:100px;" class="form-control" style="width:100px;" type="text" placeholder="" ></input>
                                 <div id="orderTimeEndDatePicker" style="position: absolute;z-index:1000"></div>
                         </label>
 
@@ -56,35 +56,47 @@
     </div>
 
 <div title="创建订单" id="create-order-dialog" style="display: none;">
-    <form method="post" action="${request.contextPath}/admin/goods/save" class="form-horizontal" id="goods-edit-form">
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" for="create-order-order-contact">联系人</label>
-            <div class="col-sm-6">
-                <input type="text" name="price" id="create-order-order-contact" placeholder="联系人" class="col-sm-12"></input>
-            </div>
-        </div>
+    <form method="post" action="${request.contextPath}/admin/order/save" class="form-horizontal" id="goods-create-form">
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="create-order-order-phone">联系电话</label>
             <div class="col-sm-6">
-                <input type="text" name="price" id="create-order-order-phone" placeholder="联系电话" class="col-sm-12"></input>
+                <input type="text" name="orderPhone" id="create-order-order-phone" placeholder="联系电话" class="col-sm-12"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="create-order-order-contact">联系人</label>
+            <div class="col-sm-6">
+                <input type="text" name="orderContact" id="create-order-order-contact" placeholder="联系人" class="col-sm-12"></input>
+            </div>
+            <div class="col-sm-3 pull-right" style="padding-top: 7px;">
+                <a href="#">
+                    <i class="ace-icon fa fa-pencil bigger-130" onclick="changeMemberInfo('memberContract')"></i>
+                </a>
+                <input type="hidden" id="change-member-contract-name" name="shouldChangeMemberName" value="false"></input>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="create-order-order-address">配送地址</label>
             <div class="col-sm-6">
-                <input type="text" name="price" id="create-order-order-address" placeholder="配送地址" class="col-sm-12"></input>
+                <input type="text" name="orderAddress" id="create-order-order-address" placeholder="配送地址" class="col-sm-12"></input>
+            </div>
+            <div class="col-sm-3 pull-right" style="padding-top: 7px;">
+                <a href="#">
+                    <i class="ace-icon fa fa-pencil bigger-130" onclick="changeMemberInfo('memberAddress')"></i>
+                </a>
+                <input type="hidden" id="#create-order-dialog" name="shouldChangeMemberAddress" value="false"></input>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="create-order-send-time">配送时间</label>
             <div class="col-sm-6">
-                <input type="text" name="price" id="create-order-send-time" placeholder="配送时间" class="col-sm-12"></input>
+                <input type="text" name="time" id="create-order-send-time" placeholder="配送时间" class="col-sm-12"></input>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="create-order-remark">订单备注</label>
             <div class="col-sm-6">
-                <textarea style="height: 100px;" name="description" class="form-control" id="create-order-remark"></textarea>
+                <textarea style="height: 100px;" name="remark" class="form-control" id="create-order-remark"></textarea>
             </div>
         </div>
         <div class="col-sm-12 widget-box">
@@ -98,13 +110,10 @@
                 </div>
             </div>
         </div>
-        <div id="ordersHiddenDiv">
-
-        </div>
+        <div id="ordersHiddenDiv"></div>
         <div class="col-sm-12" style="text-align: center;">
             <button class="btn btn-success btn-block" id="select-goods-button">选择商品</button>
         </div>
-
     </form>
 </div>
 

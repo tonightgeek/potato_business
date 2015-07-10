@@ -17,24 +17,28 @@ class OrderService {
     def saveOrder(OrderCommand orderCommand,Member member) {
 
         try {
-            def commandOrderItems = orderCommand.orderItems
+            def commandOrderItems = orderCommand.orderItemCommandList
             def orderItems = []
             def totalPrice = 0.0
-            commandOrderItems.each { key, value ->
-                def g = Goods.get(key)
+            commandOrderItems.each { it ->
+                def g = Goods.findByGoodsCode(it.goodsCode)
                 if (g) {
                     def orderItem = new OrderItem(goods: g, orderName: g.getGoodName(), totalPrice:
-                            g.getPrice() * value.toInteger(), count: value.toInteger()).save()
+                            g.getPrice() * it.goodsCount.toInteger(), count: it.goodsCount.toInteger())
                     orderItems.add(orderItem)
                     totalPrice += orderItem.totalPrice
                 }
             }
 
-            def orders = new Orders(orderSource: Orders.OrderSource.CALL_CENTER, member: member, code: CommonUtils.generateSixCode()
+            def order = new Orders(orderSource: Orders.OrderSource.CALL_CENTER, member: member, code: CommonUtils.generateSixCode()
                     , totalPrice: totalPrice, address: orderCommand.orderAddress,
-                    phone: orderCommand.orderPhone, contactName: orderCommand.orderContact, orderItems: orderItems, sendDate: orderCommand.time,
-            remark: orderCommand.remark)
-                    .save()
+                    phone: orderCommand.orderPhone, contactName: orderCommand.orderContact, sendDate: new Date(orderCommand.time),
+            remark: orderCommand.remark,orderStatus: Orders.OrderStatus.PLACE)
+            orderItems.each {
+                order.addToOrderItem(it)
+            }
+            order.save()
+            return order.getCode()
         } catch (Exception e) {
             log.error(e)
             throw e
