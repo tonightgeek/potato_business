@@ -22,6 +22,11 @@ class UrlMappings {
 
         "/web/$action"(namespace:'wechat',controller: 'main')
 
+        group "/web",{
+            "/goods/$action" (controller:'goods',namespace:'wechat')
+        }
+
+
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
                 // apply constraints here
