@@ -11,7 +11,7 @@ class MainController {
 
 
     def index() {
-        render("/wechat/index")
+        render(view:"/wechat/index")
     }
 
 

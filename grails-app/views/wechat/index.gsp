@@ -1,17 +1,13 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: sunsam
-  Date: 15/7/7
-  Time: 00:32
---%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title></title>
+    <meta name="layout" content="weblayout">
 </head>
 
 <body>
-wechat index
+<ng-view></ng-view>
+<input type="hidden" id="applicationContext" value="${request.contextPath}"/>
+<asset:javascript src="web/home.js"></asset:javascript>
 </body>
 </html>
