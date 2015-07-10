@@ -20,8 +20,7 @@ $(document).ready(
                                     success:function(data) {
                                         if(data=="success"){
                                             $("#addGoodsDialog").dialog("close");
-                                            $("#goods-table").dataTable().fnDestroy();
-                                            initTable("goods-table");
+                                            location.reload();
                                         }
                                         else {
                                             alert("保存数据异常，重新尝试");
@@ -61,6 +60,13 @@ function initTable(tableId) {
                 {"data":"status","searchable":false,orderable:false},
                 {"data":"goodsCode","searchable":false,orderable:false,render:function(data, type, row){
                     return "<button class='btn btn-primary btn-sm' onclick=\"editGoods('"+data+"')\">编辑</button>";
+                }},
+                {"data":"goodsCode","searchable":false,orderable:false,render:function(data, type, row){
+                    if(row.status == '下架'){
+                        return "<button class='btn btn-primary btn-sm' onclick=\"onsale('"+data+"')\">上架</button>";
+                    }else {
+                        return "<button class='btn btn-primary btn-sm' onclick=\"offGoods('"+data+"')\">下架</button>";
+                    }
                 }}
             ]
         });
@@ -121,4 +127,16 @@ function editGoods(code) {
         }
     );
 
+}
+
+function offGoods(goodCode) {
+    $.getJSON(getApplicationContext()+"/admin/goods/offGoods",{code:goodCode},function(data) {
+        location.reload()
+    });
+}
+
+function onsale(goodCode) {
+    $.getJSON(getApplicationContext()+"/admin/goods/onsale",{code:goodCode},function(data) {
+        location.reload()
+    });
 }

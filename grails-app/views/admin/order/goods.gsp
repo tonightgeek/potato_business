@@ -29,6 +29,7 @@
                     <th>销售价格</th>
                     <th>商品状态</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
             </table>

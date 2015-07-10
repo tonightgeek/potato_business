@@ -4,6 +4,7 @@ import com.jujiao.business.Goods
 import com.jujiao.business.admin.dto.GoodsDto
 import com.jujiao.business.common.CommonResult
 import com.jujiao.business.common.CommonUtils
+import com.sun.org.apache.xpath.internal.operations.Bool
 import grails.converters.JSON
 import grails.gorm.DetachedCriteria
 import org.apache.commons.logging.LogFactory
@@ -120,7 +121,7 @@ class GoodsController {
                 def fileName = goodsCode + "." + suffix
                 file.transferTo(new File(grailsApplication.config.goods.img.path + "/" + fileName));
                 goods.iconPath = fileName
-                goods.save()
+                goods.save(flush:true)
             }
         }
         catch (Exception e) {
@@ -140,5 +141,39 @@ class GoodsController {
             results.result = CommonResult.CommonResultStatus.FAIL
         }
         render results as JSON
+    }
+
+    def offGoods() {
+        CommonResult<Boolean> result = new CommonResult<Boolean>()
+
+        try {
+            def goods = Goods.findByGoodsCode(params.code)
+            if (goods) {
+                goods.goodsStatus = Goods.GoodsStatus.OFF_SALE
+                goods.save(flush: true)
+            }
+        } catch (Exception e) {
+            log.error(e)
+            result.result = CommonResult.CommonResultStatus.FAIL
+        }
+
+        render result as JSON
+    }
+
+    def onsale() {
+        CommonResult<Boolean> result = new CommonResult<Boolean>()
+
+        try {
+            def goods = Goods.findByGoodsCode(params.code)
+            if (goods) {
+                goods.goodsStatus = Goods.GoodsStatus.ON_SALE
+                goods.save(flush: true)
+            }
+        } catch (Exception e) {
+            log.error(e)
+            result.result = CommonResult.CommonResultStatus.FAIL
+        }
+
+        render result as JSON
     }
 }
