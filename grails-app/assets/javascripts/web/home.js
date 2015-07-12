@@ -1,6 +1,3 @@
-function getRootPath() {
-    angular.element("#applicationContext").val();
-}
 
 function isMobile(v) {
     return (/^(?:13\d|15[0-9]|18[0-9]|14[0-9]|17[0-9])-?\d{5}(\d{3}|\*{3})$/.test(v));
@@ -22,6 +19,7 @@ app.config(function($routeProvider) {
                     reloadOnSearch:true
                 })
                 .when("/success", {
+                    controller:'successController',
                     templateUrl:'../html/ordersuccess.html',
                     reloadOnSearch:true
                 })
@@ -62,7 +60,8 @@ app.controller("orderController", function ($scope,$routeParams,$http,applicatio
         url :  applicationContext+"/homepage/startorder"})
         .success(function(data, status, headers, config){
             if(data.result.name == 'SUCCESS'){
-                $scope.orderdetail = data.data
+                $scope.orderdetail = data.data;
+                angular.element("#mobile").val(data.data.memberMobile);
             }
         })
         .error(function(data, status, headers, config){
@@ -167,6 +166,10 @@ app.controller("orderController", function ($scope,$routeParams,$http,applicatio
     $scope.changeNeedNapkin = function(){
         $scope.neednapkin = !$scope.neednapkin;
     }
+});
+
+app.controller("successController", function ($scope, $routeParams, $http, applicationContext, $location) {
+    $scope.rightImgSrc = applicationContext+"/assets/right.png"
 });
 
 app.controller("homeController", function ($scope,$routeParams,$http,applicationContext,$location) {
