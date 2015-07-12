@@ -22,7 +22,7 @@ app.config(function($routeProvider) {
                     reloadOnSearch:true
                 })
                 .when("/success", {
-                    templateUrl:'../html/confirmorder.html',
+                    templateUrl:'../html/ordersuccess.html',
                     reloadOnSearch:true
                 })
                 .otherwise(
@@ -151,7 +151,7 @@ app.controller("orderController", function ($scope,$routeParams,$http,applicatio
             .success(function(data, status, headers, config){
                 if(data.result.name == 'SUCCESS'){
                     if(data.data == true){
-                        $location.path(url+"/success");
+                        $location.path("/success");
                     }
                 }
             })

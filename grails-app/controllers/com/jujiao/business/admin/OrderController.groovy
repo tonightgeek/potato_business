@@ -63,6 +63,11 @@ class OrderController {
             orderBy = params.order
             sort = params.sort
         }
+        else {
+            sort = 'dateCreated'
+            orderBy = "desc"
+        }
+
 
         def detachedCriteria = new DetachedCriteria(Orders)
 

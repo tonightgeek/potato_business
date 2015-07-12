@@ -61,5 +61,6 @@ class Orders {
     static mapping = {
         autoTimestamp true
         orderStatus(enumType: "ordinal")
+        sort dateCreated: "desc"
     }
 }
