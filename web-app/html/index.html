@@ -1,5 +1,25 @@
 <html>
 <body>
-1
+<div class="main" ng-controller="homeController">
+    <div ng-repeat="good in goodslist">
+        <div class="goodsitem">
+            <img ng-src="{{good.iconPath}}"/>
+            <h5>
+                {{good.goodName}}
+            </h5>
+            <div class="description">
+                {{good.description}}
+            </div>
+            <div class="order-area">
+                <button ng-click='addGood(good.goodsCode)'>来一份</button>
+                <span>{{good.orderCount}}</span>
+                <button ng-click='deduceGood(good.goodsCode)'>少一份</button>
+            </div>
+        </div>
+    </div>
+    <button class="order-button" ng-click="startOrder()">
+        去下单
+    </button>
+</div>
 </body>
 </html>

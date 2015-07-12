@@ -12,13 +12,16 @@
     <asset:javascript src="ace/js/jquery.js"></asset:javascript>
     <asset:javascript src="angularjs/angular.min.js"></asset:javascript>
     <asset:javascript src="angularjs/angular-route.min.js"></asset:javascript>
+    <asset:javascript src="web/mobiscroll.custom-2.6.2.min.js"></asset:javascript>
     <asset:stylesheet href="web/main.css"></asset:stylesheet>
+    <asset:stylesheet href="ace/css/font-awesome.css"></asset:stylesheet>
+    <asset:stylesheet href="ace/css/ace-fonts.css"></asset:stylesheet>
+    <asset:stylesheet src="web/mobiscroll.custom-2.6.2.min.css"></asset:stylesheet>
     <g:layoutHead></g:layoutHead>
 </head>
 
 <body ng-app="main">
 <g:layoutBody/>
-
 
 
 </body>

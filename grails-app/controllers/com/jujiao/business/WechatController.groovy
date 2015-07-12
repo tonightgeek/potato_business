@@ -69,7 +69,7 @@ class WechatController {
 
 //                cookieService.setCookie("unionid",response.unionid)
 
-                redirect(controller: "main",controllerNamespace:'wechat',action: "index")
+                redirect(controller: "homepage",controllerNamespace:'wechat',action: "index")
             }
         }
         else {

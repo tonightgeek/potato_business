@@ -9,7 +9,7 @@ class UrlMappings {
 
         "/admin/index" (
             namespace:'admin',
-            controller:'main',
+            controller:'homepage',
             action:'index'
         )
 
@@ -20,11 +20,7 @@ class UrlMappings {
             "/member/$action"(controller: "member",namespace:"admin")
         }
 
-        "/web/$action"(namespace:'wechat',controller: 'main')
-
-        group "/web",{
-            "/goods/$action" (controller:'goods',namespace:'wechat')
-        }
+        "/homepage/$action"(namespace:'wechat',controller: 'homepage')
 
 
         "/$controller/$action?/$id?(.$format)?"{
