@@ -114,6 +114,7 @@ quartz {
 environments {
     development {
         grails.logging.jul.usebridge = true
+        current.environment.name = 'dev'
         log4j = {
             appenders {
                 console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
@@ -151,6 +152,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
+        current.environment.name = 'prod'
         log4j = {
             appenders {
 

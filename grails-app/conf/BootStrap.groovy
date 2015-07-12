@@ -6,6 +6,14 @@ import grails.converters.JSON
 class BootStrap {
 
     def init = { servletContext ->
+
+        def memberList = Member.list()
+        memberList.each {
+            it.delete(flush:true)
+        }
+
+        def member = new Member(unionId:'123456789',memberSource: Member.MemberSource.IMPORT)
+        member.save(flush:true)
 //        def goodsList = Goods.list()
 //        goodsList.each {
 //            it.delete(flush: true)

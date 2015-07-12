@@ -5,8 +5,10 @@
         <div class="goodsitem">
             <img ng-src="{{good.iconPath}}"/>
             <h5>
-                {{good.goodName}}
+                <div>{{good.goodName}}</div>
+                <span style="display: block;">单价:{{good.price}}</span>
             </h5>
+
             <div class="description">
                 {{good.description}}
             </div>

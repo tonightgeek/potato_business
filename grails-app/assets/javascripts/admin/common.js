@@ -35,3 +35,4 @@ function activeMenu(id) {
     $("#goods-menu-li").attr("css", "");
     $("#" + id).attr("css", "active");
 }
+

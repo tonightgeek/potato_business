@@ -23,7 +23,7 @@ class Member {
     }
 
     public enum MemberSource {
-        CALL_CENTER,WECHAT
+        CALL_CENTER,WECHAT,IMPORT
     }
 
     static constraints = {
@@ -31,6 +31,9 @@ class Member {
         city nullable: true,blank: true
         province nullable: true,blank: true
         memberSex nullable: true,blank: true
+        mobile nullable: true,blank: true
+        userName nullable: true,blank: true
+        address nullable: true,blank: true
     }
 
     static mapping = {

@@ -55,6 +55,7 @@ class Orders {
 
 
     static constraints = {
+        remark nullable: true,blank: true
     }
 
     static mapping = {

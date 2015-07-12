@@ -3,30 +3,29 @@
 <div class="main" ng-controller="orderController">
     <div class="input-box transition-2s" ng-class="{displayerror:mobileerror}">
         <p>
-            <input id="mobile" type="number" placeholder="联系电话" ng-blur="validMobile()"/>
+            <input id="mobile" type="number" placeholder="联系电话" ng-blur="validMobile()" ng-model="orderdetail.memberMobile"/>
         </p>
     </div>
     <div class="input-box transition-2s" ng-class="{displayerror:usernameerror}">
         <p>
-            <input type="text" id="username" placeholder="联系人" ng-model="orderdetail.memberUserName"></input>
+            <input type="text" id="username" placeholder="联系人" ng-model="orderdetail.memberUserName" ng-blur="validUsername()"></input>
         </p>
     </div>
     <div class="input-box transition-2s" ng-class="{displayerror:addresserror}">
         <p>
-            <input type="text" placeholder="配送地址" ng-model="orderdetail.memberAddress"></input>
+            <input type="text" id="address" placeholder="配送地址" ng-model="orderdetail.memberAddress" ng-blur="validAddress()"></input>
         </p>
     </div>
     <div class="input-box transition-2s" ng-class="{displayerror:sendtimeerror}">
         <p id="send-time">
             <span style="height: 30px;line-height: 30px;font-size: 14px;color: #868686" id="time-value">配送时间</span>
         </p>
-        <input type="hidden" ng-model="selectedDate"/>
     </div>
     <div class="input-box checkbutton">
         <span>需要:</span>
-        <button ng-class="{true: 'checked', false: 'unchecked'}[needcandy]" ng-click="changeNeedCandy()" onFocus="this.blur()">
+        <div ng-class="{true: 'checked', false: 'unchecked'}[needcandy]" ng-click="changeNeedCandy()" onFocus="this.blur()">
             润喉糖
-        </button>
+        </div>
         <div ng-class="{true: 'checked', false: 'unchecked'}[neednapkin]" ng-click="changeNeedNapkin()">
             餐巾纸
         </div>
@@ -45,11 +44,11 @@
     </div>
     <div class="input-box textarea-div">
         <p>
-            <span>订单备注:<textarea></textarea></span>
+            <span>订单备注:<textarea id="order-remark"></textarea></span>
 
         </p>
     </div>
-    <button style="background-color:#fecb56 ;position: relative;bottom: 0px;width: 100%;height: 40px;letter-spacing: 10px;font-size: 14px;">
+    <button style="background-color:#fecb56 ;position: relative;bottom: 0px;width: 100%;height: 40px;letter-spacing: 10px;font-size: 14px;" ng-click="submitOrder()">
         确认订单
     </button>
 </div>

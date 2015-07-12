@@ -63,11 +63,17 @@ class WechatController {
                 response = get(path:'/sns/userinfo',query:[access_token: accessToken,
                                                                           openid:openId,
                                                                           lang:'zh_CN']){resp,html->
-                    log.error('resp==='+resp+'--html'+html)
                     return html
                 }
 
-//                cookieService.setCookie("unionid",response.unionid)
+                log.error('wechat auth unionid---'+response.unionid)
+                cookieService.setCookie("unionid",response.unionid)
+
+                if (!Member.findByUnionId(response.unionid)) {
+                    def member = new Member(unionId:response.unionid,memberSource: Member.MemberSource.CALL_CENTER)
+                    member.save(flush:true)
+                }
+
 
                 redirect(controller: "homepage",controllerNamespace:'wechat',action: "index")
             }

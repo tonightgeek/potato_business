@@ -11,19 +11,37 @@ class AuthFilters {
 
     def filters = {
 
-//        someUri(uri:'/web/**'){
-//            before = {
-//                log.error('start web interceptor')
-//                if(!cookieService.getCookie("unionid")) {
-//                    def redirectUrl = MessageFormat.format(grailsApplication.config.weixin.oauth2.url, [grailsApplication.config.wechat.config.appid,
-//                                                                                                        URLEncoder.encode(grailsApplication.config.weixin.oauth2.redirectUri)].toArray())
-//                    redirect(url: redirectUrl)
-//                    return false
-//                }
-//                else {
-//                    return true
-//                }
-//            }
-//        }
+        someUri(uri:'/homepage/**'){
+            before = {
+                try {
+                    if (grailsApplication.config.current.environment.name == 'prod') {
+                        log.error('start web interceptor')
+                        if (!cookieService.getCookie("unionid")) {
+                            log.error("error get unionid")
+                            def redirectUrl = MessageFormat.format(grailsApplication.config.weixin.oauth2.url, [grailsApplication.config.wechat.config.appid,
+                                                                                                                URLEncoder.encode(grailsApplication.config.weixin.oauth2.redirectUri)].toArray())
+                            redirect(url: redirectUrl)
+                            return false
+                        } else {
+                            log.error("unionid----" + cookieService.getCookie("unionid"))
+                            return true
+                        }
+                    }
+                    else {
+                        if (!cookieService.getCookie("unionid")) {
+                            cookieService.setCookie("unionid","123456789")
+                        }
+                        else {
+                            log.error("dev unionid----" + cookieService.getCookie("unionid"))
+                            return true
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    log.error('error on filters',e)
+                    return false
+                }
+            }
+        }
     }
 }

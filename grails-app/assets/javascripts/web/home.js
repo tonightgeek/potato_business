@@ -2,6 +2,10 @@ function getRootPath() {
     angular.element("#applicationContext").val();
 }
 
+function isMobile(v) {
+    return (/^(?:13\d|15[0-9]|18[0-9]|14[0-9]|17[0-9])-?\d{5}(\d{3}|\*{3})$/.test(v));
+}
+
 var app = angular.module('main',['ngRoute']);
 
 app.config(function($routeProvider) {
@@ -14,6 +18,10 @@ app.config(function($routeProvider) {
                 })
                 .when("/order/:goodsCode/:goodsCount", {
                     controller: 'orderController',
+                    templateUrl:'../html/confirmorder.html',
+                    reloadOnSearch:true
+                })
+                .when("/success", {
                     templateUrl:'../html/confirmorder.html',
                     reloadOnSearch:true
                 })
@@ -41,6 +49,7 @@ app.controller("orderController", function ($scope,$routeParams,$http,applicatio
         lang: 'zh',
         onSelect: function(data){
             $scope.selectedDate = data;
+            $scope.sendtimeerror = false;
             if(data.length > 0) {
                 angular.element("#time-value").html(data);
                 angular.element("#time-value").css("color", "#1e1e1e");
@@ -59,18 +68,98 @@ app.controller("orderController", function ($scope,$routeParams,$http,applicatio
         .error(function(data, status, headers, config){
         });
 
-    $scope.validMobile = function (element) {
-        var mobile = angular.element("#mobile").val();
-        alert(mobile.length);
-        if(mobile.length < 11) {
+    $scope.validMobile = function () {
+        if(!isMobile(angular.element("#mobile").val())) {
+            $scope.mobileerror = true;
+        }
+        else {
+            $scope.mobileerror = false;
+        }
+    };
+
+    $scope.validUsername = function () {
+        var username = angular.element("#username").val();
+        if(username.length < 1) {
+            $scope.usernameerror = true;
+        }
+        else {
+            $scope.usernameerror = false;
+        }
+    };
+
+    $scope.validAddress = function () {
+        var address = angular.element("#address").val();
+        if(address.length < 1) {
+            $scope.addresserror = true;
+        }
+        else {
+            $scope.addresserror = false;
+        }
+    };
+
+
+
+    $scope.submitOrder = function() {
+        var mobile = angular.element("#mobile").val(),
+            canSubmit = true;
+
+        if(!isMobile(mobile)) {
+            canSubmit=false;
             $scope.mobileerror = true;
         }
         else {
             $scope.mobileerror = false;
         }
 
-    };
+        var username = angular.element("#username").val();
+        if(username.length < 1) {
+            canSubmit=false;
+            $scope.usernameerror = true;
+        }
+        else {
+            $scope.usernameerror = false;
+        }
 
+        var address = angular.element("#address").val();
+        if(address.length < 1) {
+            canSubmit=false;
+            $scope.addresserror = true;
+        }
+        else {
+            $scope.addresserror = false;
+        }
+
+        var sendTime = angular.element("#time-value").html();
+        if(sendTime == '配送时间') {
+            canSubmit=false;
+            $scope.sendtimeerror = true;
+        }
+        else {
+            $scope.sendtimeerror = false;
+        }
+
+        if(!canSubmit){
+            //event.preventDefault();
+            return;
+        }
+
+        var remark = angular.element("#order-remark").val();
+
+        $http({method : 'POST', params:{orderContract:username,orderMobile:mobile,orderAddress:address,orderSendTime:sendTime
+            ,goodsCodes:$routeParams.goodsCode,goodsCount:$routeParams.goodsCount,orderRemark:remark},
+            url :  applicationContext+"/homepage/createorder"})
+            .success(function(data, status, headers, config){
+                if(data.result.name == 'SUCCESS'){
+                    if(data.data == true){
+                        $location.path(url+"/success");
+                    }
+                }
+            })
+            .error(function(data, status, headers, config){
+                alert("下单失败,请重新尝试!");
+            });
+
+    };
     $scope.changeNeedCandy = function() {
         $scope.needcandy = !$scope.needcandy;
     };
@@ -112,6 +201,7 @@ app.controller("homeController", function ($scope,$routeParams,$http,application
             }
         });
     };
+
 
     $scope.startOrder = function() {
         var url = "/order",goodsCount='',goodsCode='';
