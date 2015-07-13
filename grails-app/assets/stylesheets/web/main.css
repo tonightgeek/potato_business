@@ -220,3 +220,23 @@ input[type="button"], input[type="text"], input[type="number"],input[type="passw
     -webkit-transition:  2s;
     -o-transition:  2s;
 }
+
+.warning-info{
+    color: #ff892a !important;
+    width: 100%;
+}
+
+.warning-info ul {
+    padding-top: 20px;
+}
+
+.warning-info ul li
+{
+    font-size: 16px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+}
+
+.warning-info ul li:before{
+    content: "*   ";
+}

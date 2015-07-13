@@ -1,6 +1,7 @@
 package com.jujiao.business
 
 import com.jujiao.business.common.CommonUtils
+import groovy.xml.MarkupBuilder
 import org.apache.commons.logging.LogFactory
 
 import javax.servlet.http.Cookie
@@ -14,8 +15,29 @@ class WechatController {
     def wechatService
 
     def index() {
-        log.error("request.reader.text -- "+request.reader.text)
-        render "ok"
+
+        if (request.XML?.MsgType == "text") {
+            log.error("request.XML.MsgType")
+            def result = String.format("""<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%s</CreateTime>
+            <MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml>""",request.XML?.FromUserName,request.XML?.ToUserName,Calendar.getInstance().getTime().getTime(),
+            """你好,欢迎关注"土豆嘟嘟".我们的营业时间是10:00-21:00,配送范围在五角场和江湾体育场,为了不影响您的用餐时间,请提前1小时订餐,谢谢!""")
+            log.error(result)
+            render(result,contentType: "text/plain",encoding: "utf-8")
+        }
+        else if (request.XML?.MsgType == "event" && request.XML.Event=="subscribe") {
+            log.error("request subscribe event")
+            def result = String.format("""<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%s</CreateTime>
+            <MsgType><![CDATA[text]]></MsgType><Content><![CDATA[%s]]></Content></xml>""",request.XML?.FromUserName,request.XML?.ToUserName,Calendar.getInstance().getTime().getTime(),
+                    """你好,欢迎关注"土豆嘟嘟".我们的营业时间是10:00-21:00,配送范围在五角场和江湾体育场,为了不影响您的用餐时间,请提前1小时订餐,谢谢!""")
+            log.error(result)
+            render(result,contentType: "text/plain",encoding: "utf-8")
+        }
+        else if (request.XML?.MsgType == "event" && request.XML.Event == "unsubscribe") {
+            log.error("request unsubscribe event")
+        }
+
+
+
 //        log.error("wechat index---"+request.getContentLength())
 //        for(String param : request.getParameterNames()){
 //            log.error("parameters--"+param+":"+request.getParameter(param))

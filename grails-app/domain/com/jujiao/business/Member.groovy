@@ -37,5 +37,13 @@ class Member {
     }
 
     static mapping = {
+        mobile length: 20
+        address length: 100
+        unionId length: 80
+        userName length: 20
+        city length: 20
+        province length: 20
+        memberSex length: 80
+        memberSource length: 80
     }
 }

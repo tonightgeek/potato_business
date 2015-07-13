@@ -46,7 +46,6 @@
                 <table id="order-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample-table-2_info">
                     <thead>
                         <tr>
-                            <th>订单号</th>
                             <th>联系人</th>
                             <th>联系地址</th>
                             <th>总价</th>
@@ -54,6 +53,7 @@
                             <th>下单时间</th>
                             <th>订单状态</th>
                             <th>订单来源</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -138,6 +138,15 @@
     </table>
 </div>
 
+
+
+<div title="修改备注" id="add-remark-dialog" style="display: none;">
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="add-remark-text-area">订单备注</label>
+        <textarea style="height: 300px;" class="form-control" id="add-remark-text-area"></textarea>
+    </div>
+    <input type="hidden" id="add-remark-order-code"/>
+</div>
 
 <div title="订单详情" id="order-detail-dialog" style="display: none;">
         <div class="row">

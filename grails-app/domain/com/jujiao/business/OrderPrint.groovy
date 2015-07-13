@@ -7,4 +7,8 @@ class OrderPrint {
 
     static constraints = {
     }
+
+    static mapping = {
+        orderCode length: 20
+    }
 }

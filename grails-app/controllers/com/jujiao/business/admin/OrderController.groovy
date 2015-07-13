@@ -22,7 +22,7 @@ class OrderController {
 
     def index() {
         def needPrintCount = OrderPrint.countByHasPrint(false)
-        render(view: "/admin/order/index",model:[needPrintCount:needPrintCount])
+            render(view: "/admin/order/index",model:[needPrintCount:needPrintCount])
     }
 
     def save(OrderCommand orderCommand) {
@@ -189,5 +189,33 @@ class OrderController {
         catch (Exception e) {
             log.error(e)
         }
+    }
+
+    def getRemark() {
+        CommonResult<String> results = new CommonResult<String>()
+        try {
+            def order = Orders.findByCode(params.orderCode)
+            results.data = order.remark
+
+        } catch (Exception e) {
+            log.error(e)
+            results.result = CommonResult.CommonResultStatus.FAIL
+        }
+        render results as JSON
+    }
+
+    def modifyRemark() {
+        CommonResult<Boolean> results = new CommonResult<Boolean>()
+        try{
+            def order = Orders.findByCode(params.orderCode)
+            order.remark = params.remark
+            order.save(flush: true)
+            results.data=true
+        }catch (Exception e) {
+            log.error(e)
+            results.result = CommonResult.CommonResultStatus.FAIL
+        }
+        render results as JSON
+
     }
 }

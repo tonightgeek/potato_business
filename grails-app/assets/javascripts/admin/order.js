@@ -189,6 +189,34 @@ $(document).ready(
         );
 
         $("#create-order-send-time").timepicker();
+
+
+        $("#add-remark-dialog").dialog({
+            modal: true,
+            width: 500,
+            buttons: [{
+                text: "修改备注",
+                click:function() {
+                    $.getJSON(getApplicationContext()+"/admin/order/modifyRemark",
+                        {orderCode:$("#add-remark-order-code").val(),
+                            remark:$("#add-remark-text-area").val()
+                        },
+                        function(data){
+                            if(data.data!=true){
+                                alert("服务器错误,重新尝试");
+                            }
+                            $("#add-remark-dialog").dialog("close");
+                        }
+                    );
+                }
+            },{
+                text:"关闭",
+                click:function(){
+                    $(this).dialog("close");
+                }
+            }]
+        });
+        $("#add-remark-dialog").dialog("close");
     }
 );
 
@@ -265,7 +293,6 @@ function initOrderTable(tableId) {
                 "url":getApplicationContext()+"/admin/order/list"
             },
             "columns":[
-                {"data":"code","searchable":false,orderable:false},
                 {"data":"contactName","searchable":false,orderable:false},
                 {"data":"address","searchable":false,orderable:false},
                 {"data":"totalPrice","searchable":false},
@@ -275,6 +302,9 @@ function initOrderTable(tableId) {
                 {"data":"orderSource","searchable":false,ordable:false},
                 {"data":"code","searchable":false,render:function(data, type, row){
                     return "<button class='btn btn-success btn-block' onclick='cancelOrder(\""+data+"\")'>取消</button>";
+                }},
+                {"data":"code","searchable":false,render:function(data, type, row){
+                    return "<button class='btn btn-success btn-block' onclick='addRemark(\""+data+"\")'>修改备注</button>";
                 }},
                 {"data":"code","searchable":false,render:function(data, type, row){
                     return "<button class='btn btn-success btn-block' onclick='showOrder(\""+data+"\")'>详情</button>";
@@ -289,6 +319,18 @@ function initOrderTable(tableId) {
 function print(orderCode) {
     location.href = getApplicationContext() + "/admin/order/print?orderCode=" + orderCode;
 }
+
+function addRemark(orderCode) {
+
+    $.getJSON(getApplicationContext() + "/admin/order/getRemark", {orderCode: orderCode}, function (data) {
+        $("#add-remark-text-area").val(data.data);
+        $("#add-remark-dialog").dialog("open");
+    });
+
+    $("#add-remark-order-code").val(orderCode);
+
+}
+
 
 function showOrder(orderCode) {
     $.getJSON(getApplicationContext() + "/admin/order/get", {code: orderCode}, function (data) {

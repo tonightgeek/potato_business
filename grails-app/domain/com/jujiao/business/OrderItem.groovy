@@ -17,5 +17,6 @@ class OrderItem {
     }
 
     static mapping = {
+        orderName length: 20
     }
 }

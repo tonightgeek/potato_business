@@ -11,7 +11,9 @@ class Orders {
     OrderStatus orderStatus
     OrderSource orderSource
     String remark
+    String cancelReason
 
+    boolean hasPrinted = false
 
     Member member
     static hasMany = [orderItem:OrderItem]
@@ -60,11 +62,18 @@ class Orders {
 
     static constraints = {
         remark nullable: true,blank: true
+        cancelReason nullable: true,blank: true
     }
 
     static mapping = {
         autoTimestamp true
+        remark type: 'text'
+        code length: 20
+        address length: 100
+        contactName length: 20
+        phone length: 20
         orderStatus(enumType: "ordinal")
         sort dateCreated: "desc"
+        orderSource length: 20
     }
 }

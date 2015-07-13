@@ -92,14 +92,13 @@ class WebController {
             }
 
             if (!member) {
-                new Member(unionId: unionid, memberSource: Member.MemberSource.WECHAT,
+                member = new Member(unionId: unionid, memberSource: Member.MemberSource.WECHAT,
                         mobile:params.orderMobile,address:params.orderAddress,userName:params.orderContract).save(flush: true)
             }
             else {
                 if (!member.unionId) {
                     member.unionId = unionid
                 }
-
                 if (!member.mobile) {
                     member.mobile = params.orderMobile
                 }
@@ -109,6 +108,7 @@ class WebController {
                 if (!member.userName) {
                     member.userName = params.orderContract
                 }
+
                 member.save(flush: true)
             }
 

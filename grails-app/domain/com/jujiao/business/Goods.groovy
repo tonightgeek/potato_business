@@ -28,5 +28,6 @@ class Goods {
     static mapping = {
         autoTimestamp true
         sort dateCreated: "desc"
+
     }
 }
