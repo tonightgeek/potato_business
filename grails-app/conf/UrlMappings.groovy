@@ -3,8 +3,8 @@ class UrlMappings {
 	static mappings = {
 
         "/" (
-                controller: 'web',
-                action: 'index'
+            controller: 'wechat',
+            action: 'index'
         )
 
         "/admin/index" (

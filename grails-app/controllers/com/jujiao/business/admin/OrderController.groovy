@@ -1,6 +1,7 @@
 package com.jujiao.business.admin
 
 import com.jujiao.business.Member
+import com.jujiao.business.OrderPrint
 import com.jujiao.business.admin.command.OrderCommand
 import com.jujiao.business.admin.dto.OrderItemDto
 import com.jujiao.business.common.CommonResult
@@ -20,7 +21,8 @@ class OrderController {
     def orderService
 
     def index() {
-        render(view: "/admin/order/index")
+        def needPrintCount = OrderPrint.countByHasPrint(false)
+        render(view: "/admin/order/index",model:[needPrintCount:needPrintCount])
     }
 
     def save(OrderCommand orderCommand) {
@@ -153,5 +155,39 @@ class OrderController {
             log.error('cancel order error ',e)
         }
         render results as JSON
+    }
+
+    def print() {
+        try {
+            def orderList = []
+            if (params.orderCode) {
+                def order = Orders.findByCode(params.orderCode)
+                def orderDto = [code         : order.code, phone: order.phone, totalPrice: order.totalPrice, address: order.address, sendDate: order.sendDate.format("yyyy/MM/dd hh:mm:ss")
+                                , orderStatus: order.orderStatus.displayValue, contactName: order.contactName, remark: order.remark, orderSource: order.orderSource.displayValue] as OrderDto
+                order.orderItem.each {
+                    def orderItemDto = [goodsName: it.goods.goodName, count: it.count, totalPrice: it.totalPrice] as OrderItemDto
+                    orderDto.orderItemDtoList.add(orderItemDto)
+                }
+                orderList.add(orderDto)
+            }
+            if (params.printAll) {
+                def orderPrintList = OrderPrint.findAllByHasPrint(false,[max: 5, offset: 0])
+                for (OrderPrint orderPrint : orderPrintList) {
+                    def order = Orders.findByCode(orderPrint.orderCode)
+                    if(order.orderStatus == Orders.OrderStatus.PLACE)
+                    {
+                        def orderDto = [code         : order.code, phone: order.phone, totalPrice: order.totalPrice, address: order.address, sendDate: order.sendDate.format("yyyy/MM/dd hh:mm:ss")
+                                        , orderStatus: order.orderStatus.displayValue, contactName: order.contactName, remark: order.remark, orderSource: order.orderSource.displayValue] as OrderDto
+                        orderList.add(orderDto)
+                    }
+                    orderPrint.hasPrint = true
+                    orderPrint.save(flush: true)
+                }
+            }
+            render(view: "/admin/order/printpage", model: [orderList: orderList])
+        }
+        catch (Exception e) {
+            log.error(e)
+        }
     }
 }

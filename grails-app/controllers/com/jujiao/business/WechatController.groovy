@@ -14,14 +14,16 @@ class WechatController {
     def wechatService
 
     def index() {
-        for(String param : request.getParameterNames()){
-            log.error("parameters--"+param+":"+request.getParameter(param))
-        }
-        if(request.getParameter("echostr")){
-            response.getWriter()
-//            response.writer.write(request.getParameter("echostr"))
-            render(request.getParameter("echostr"),contentType: "text/plain",encoding: "utf-8")
-        }
+        log.error("request.reader.text -- "+request.reader.text)
+        render "ok"
+//        log.error("wechat index---"+request.getContentLength())
+//        for(String param : request.getParameterNames()){
+//            log.error("parameters--"+param+":"+request.getParameter(param))
+//        }
+//        if(request.getParameter("echostr")){
+//            response.getWriter()
+//            render(request.getParameter("echostr"),contentType: "text/plain",encoding: "utf-8")
+//        }
     }
 
     def refreshAccessToken() {
@@ -77,7 +79,7 @@ class WechatController {
                 log.error('unionid from cookie '+CommonUtils.getCookieValue(request,"unionid"))
 
                 if (!Member.findByUnionId(response.unionid)) {
-                    def member = new Member(unionId: response.unionid, memberSource: Member.MemberSource.CALL_CENTER)
+                    def member = new Member(unionId: response.unionid, memberSource: Member.MemberSource.WECHAT)
                     member.save(flush: true)
                 }
 

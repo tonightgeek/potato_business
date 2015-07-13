@@ -16,7 +16,7 @@ class AuthFilters {
             before = {
                 try {
                     if (grailsApplication.config.current.environment.name == 'prod') {
-
+                        log.error("enter filter")
                         String unionid = CommonUtils.getCookieValue(request,"unionid")
 
                         if (!unionid) {

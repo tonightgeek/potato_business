@@ -29,6 +29,8 @@ app.config(function($routeProvider) {
     }
 );
 
+
+
 app.constant('applicationContext',
     (
         function(){
@@ -37,9 +39,14 @@ app.constant('applicationContext',
     )()
 );
 
+
 app.controller("orderController", function ($scope,$routeParams,$http,applicationContext,$location) {
-    $scope.needcandy = false;
-    $scope.neednapkin = false;
+
+    $scope.$on('$routeChangeSuccess',function(evt) {
+        alert("parameters---" +params);
+    });
+
+
     $('#send-time').mobiscroll().time({
         theme: 'ios',
         mode: 'scroller',
@@ -169,7 +176,10 @@ app.controller("orderController", function ($scope,$routeParams,$http,applicatio
 });
 
 app.controller("successController", function ($scope, $routeParams, $http, applicationContext, $location) {
-    $scope.rightImgSrc = applicationContext+"/assets/right.png"
+    $scope.rightImgSrc = applicationContext + "/right.png";
+    $scope.backToHome = function() {
+        $location.path("/home");
+    };
 });
 
 app.controller("homeController", function ($scope,$routeParams,$http,applicationContext,$location) {
@@ -178,6 +188,9 @@ app.controller("homeController", function ($scope,$routeParams,$http,application
             if(data.result.name == 'SUCCESS'){
                 $scope.goodslist = data.data;
                 angular.forEach(data.data,function(good) {
+                    if(good.salePrice != good.basePrice) {
+                        good.hasDifference = true
+                    }
                     good.iconPath = applicationContext + "/" +good.iconPath;
                     good.orderCount = 0;
                 })

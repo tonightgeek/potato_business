@@ -44,9 +44,11 @@ class WebController {
             String unionid = CommonUtils.getCookieValue(request,"unionid")
             if (unionid) {
                 def member = Member.findByUnionId(unionid)
-                data.memberAddress = member.address
-                data.memberUserName = member.userName
-                data.memberMobile = member.mobile
+                if (member) {
+                    data.memberAddress = member.address
+                    data.memberUserName = member.userName
+                    data.memberMobile = member.mobile
+                }
             }
 
             params.totalprice =0.00
@@ -89,20 +91,26 @@ class WebController {
                 member = Member.findByUnionId(unionid)
             }
 
-            if (!member.unionId) {
-                member.unionId = unionid
+            if (!member) {
+                new Member(unionId: unionid, memberSource: Member.MemberSource.WECHAT,
+                        mobile:params.orderMobile,address:params.orderAddress,userName:params.orderContract).save(flush: true)
             }
+            else {
+                if (!member.unionId) {
+                    member.unionId = unionid
+                }
 
-            if (!member.mobile) {
-                member.mobile = params.orderMobile
+                if (!member.mobile) {
+                    member.mobile = params.orderMobile
+                }
+                if (!member.address) {
+                    member.address = params.orderAddress
+                }
+                if (!member.userName) {
+                    member.userName = params.orderContract
+                }
+                member.save(flush: true)
             }
-            if (!member.address) {
-                member.address = params.orderAddress
-            }
-            if (!member.userName) {
-                member.userName = params.orderContract
-            }
-            member.save(flush: true)
 
             def order = new Orders(code: CommonUtils.generateSixCode(), address: params.orderAddress,
                     phone: params.orderMobile, contactName: params.orderContract, orderSource: Orders.OrderSource.WECHAT_DECUTATION_2,

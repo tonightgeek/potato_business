@@ -169,7 +169,12 @@ app.controller("orderController", function ($scope,$routeParams,$http,applicatio
 });
 
 app.controller("successController", function ($scope, $routeParams, $http, applicationContext, $location) {
-    $scope.rightImgSrc = applicationContext+"/assets/right.png"
+    $scope.rightImgSrc = applicationContext+"/assets/right.png";
+
+
+    $scope.backToHome=function(){
+        $location.path(url+"/home");
+    }
 });
 
 app.controller("homeController", function ($scope,$routeParams,$http,applicationContext,$location) {

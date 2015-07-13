@@ -278,9 +278,16 @@ function initOrderTable(tableId) {
                 }},
                 {"data":"code","searchable":false,render:function(data, type, row){
                     return "<button class='btn btn-success btn-block' onclick='showOrder(\""+data+"\")'>详情</button>";
+                }},
+                {"data":"code","searchable":false,render:function(data, type, row){
+                    return "<button class='btn btn-success btn-block' onclick='print(\""+data+"\")'>打印页面</button>";
                 }}
             ]
         });
+}
+
+function print(orderCode) {
+    location.href = getApplicationContext() + "/admin/order/print?orderCode=" + orderCode;
 }
 
 function showOrder(orderCode) {
@@ -345,3 +352,7 @@ function changeMemberInfo(specifiedField) {
     }
 }
 
+
+function showPrintAllPages(){
+    location.href=getApplicationContext()+"/admin/order/print?printAll=true";
+}

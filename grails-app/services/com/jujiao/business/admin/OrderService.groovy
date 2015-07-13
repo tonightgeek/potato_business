@@ -3,6 +3,7 @@ package com.jujiao.business.admin
 import com.jujiao.business.Goods
 import com.jujiao.business.Member
 import com.jujiao.business.OrderItem
+import com.jujiao.business.OrderPrint
 import com.jujiao.business.Orders
 import com.jujiao.business.admin.command.OrderCommand
 import com.jujiao.business.common.CommonUtils
@@ -40,6 +41,9 @@ class OrderService {
                 order.addToOrderItem(it)
             }
             order.save()
+
+            new OrderPrint(orderCode: order.code,hasPrint: true).save()
+
             return order.getCode()
         } catch (Exception e) {
             log.error(e)

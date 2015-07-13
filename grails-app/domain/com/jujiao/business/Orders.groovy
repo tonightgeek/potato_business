@@ -53,6 +53,10 @@ class Orders {
 
     }
 
+    def afterInsert = {
+        def orderPrint = new OrderPrint(orderCode: this.code,hasPrint: false)
+        orderPrint.save()
+    }
 
     static constraints = {
         remark nullable: true,blank: true

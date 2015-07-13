@@ -6,7 +6,8 @@
             <img ng-src="{{good.iconPath}}"/>
             <h5>
                 <div>{{good.goodName}}</div>
-                <span style="display: block;">单价:{{good.basePrice}}<span style="color: red;padding-left: 15px;font-size: 16px;">微信价:{{good.salePrice}}</span></span>
+                <span style="display: block;" ng-show="{{good.hasDifference}}">单价:{{good.basePrice}}<span style="color: red;padding-left: 15px;font-size: 16px;">促销价:{{good.salePrice}}</span></span>
+                <span style="display: block;" ng-show="{{!good.hasDifference}}">单价:{{good.basePrice}}</span>
             </h5>
 
             <div class="description">

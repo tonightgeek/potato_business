@@ -11,6 +11,11 @@
         <button class="btn btn-primary" id="create-order-button">
             创建订单
         </button>
+        <g:if test="${needPrintCount>0}">
+            <button class="btn btn-primary" onclick="showPrintAllPages()">
+                ${needPrintCount}个订单未打印
+            </button>
+        </g:if>
     </div>
     <div class="row">
         <div class="col-xs-12">
@@ -49,6 +54,7 @@
                             <th>下单时间</th>
                             <th>订单状态</th>
                             <th>订单来源</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
