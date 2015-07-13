@@ -3,13 +3,13 @@ class UrlMappings {
 	static mappings = {
 
         "/" (
-                controller: 'wechat',
+                controller: 'web',
                 action: 'index'
         )
 
         "/admin/index" (
             namespace:'admin',
-            controller:'homepage',
+            controller:'order',
             action:'index'
         )
 
@@ -19,8 +19,6 @@ class UrlMappings {
             "/goods/$action"(controller: "goods",namespace:"admin")
             "/member/$action"(controller: "member",namespace:"admin")
         }
-
-        "/homepage/$action"(namespace:'wechat',controller: 'homepage')
 
 
         "/$controller/$action?/$id?(.$format)?"{

@@ -21,12 +21,14 @@ class OrderService {
             def orderItems = []
             def totalPrice = 0.0
             commandOrderItems.each { it ->
-                def g = Goods.findByGoodsCode(it.goodsCode)
-                if (g) {
-                    def orderItem = new OrderItem(goods: g, orderName: g.getGoodName(), totalPrice:
-                            g.getPrice() * it.goodsCount.toInteger(), count: it.goodsCount.toInteger())
-                    orderItems.add(orderItem)
-                    totalPrice += orderItem.totalPrice
+                if(it){
+                    def g = Goods.findByGoodsCode(it.goodsCode)
+                    if (g) {
+                        def orderItem = new OrderItem(goods: g, orderName: g.getGoodName(), totalPrice:
+                                g.getBasePrice() * it.goodsCount.toInteger(), count: it.goodsCount.toInteger())
+                        orderItems.add(orderItem)
+                        totalPrice += orderItem.totalPrice
+                    }
                 }
             }
 

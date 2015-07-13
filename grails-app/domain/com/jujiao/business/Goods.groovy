@@ -4,7 +4,8 @@ class Goods {
 
     String goodsCode
     String goodName
-    Float price
+    Float salePrice
+    Float basePrice
     String iconPath
     String description
     String sendScope
@@ -21,6 +22,7 @@ class Goods {
     static constraints = {
         sendScope nullable: true,blank: true
         iconPath nullable: true,blank: true
+        salePrice nullable: true,blank: true
     }
 
     static mapping = {

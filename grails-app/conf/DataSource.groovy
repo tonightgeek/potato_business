@@ -42,6 +42,11 @@ environments {
             password = 'dudu#folmos#0123456'
             url = 'jdbc:mysql://10.4.20.140:3306/potato?useUnicode=true&characterEncoding=UTF-8'
             dbCreate = 'validate'
+//            driverClassName = 'com.mysql.jdbc.Driver'
+//            username = 'root'
+//            password = ''
+//            url = 'jdbc:mysql://localhost:3306/potato?useUnicode=true&characterEncoding=UTF-8'
+//            dbCreate = 'none'
         }
     }
 }

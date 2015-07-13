@@ -48,6 +48,7 @@
                             <th>配送时间</th>
                             <th>下单时间</th>
                             <th>订单状态</th>
+                            <th>订单来源</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -165,6 +166,11 @@
         <div class="row">
             <label class="col-sm-3 control-label no-padding-right">订单状态</label>
             <span class="col-sm-6 green" id="view-order-status">
+            </span>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label no-padding-right">订单来源</label>
+            <span class="col-sm-6 green" id="view-order-source">
             </span>
         </div>
         <div class="row">

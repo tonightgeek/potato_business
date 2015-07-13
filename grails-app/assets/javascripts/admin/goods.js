@@ -7,7 +7,8 @@ $(document).ready(
         $("#add-goods").click(
             function() {
                 $("#goods-names-input").val("");
-                $("#goods-sales-input").val("");
+                $("#goods-sales-price").val("");
+                $("#goods-base-price").val("");
                 $("#goods-description-input").val("");
                 $("#addGoodsDialog").dialog(
                     {
@@ -56,7 +57,7 @@ function initTable(tableId) {
             "columns":[
                 {"data":"goodsCode","searchable":false,orderable:false},
                 {"data":"goodName","searchable":false,orderable:false},
-                {"data":"price","searchable":false,orderable:false},
+                {"data":"basePrice","searchable":false,orderable:false},
                 {"data":"status","searchable":false,orderable:false},
                 {"data":"goodsCode","searchable":false,orderable:false,render:function(data, type, row){
                     return "<button class='btn btn-primary btn-sm' onclick=\"editGoods('"+data+"')\">编辑</button>";
@@ -74,16 +75,16 @@ function initTable(tableId) {
 
 function editGoods(code) {
     $("#edit-goods-code").val(code);
-    clearElementsValue(['edit-goods-name','edit-goods-price','edit-goods-description']);
+    clearElementsValue(['edit-goods-name','edit-goods-price','edit-goods-description','edit-goods-sales-price']);
     $.ajax({
             url:getApplicationContext()+"/admin/goods/get",
             data:{code:code},
             async:false,
             success:function(data) {
-                setElementsValue(['edit-goods-name','edit-goods-price','edit-goods-description'],[data.data.goodName,data.data.price,
-                data.data.description]);
+                setElementsValue(['edit-goods-name','edit-goods-price','edit-goods-description','edit-goods-sales-price'],[data.data.goodName,data.data.basePrice,
+                data.data.description,data.data.salePrice]);
                 $("#edit-goods-img-path").attr("src", getApplicationContext()+'/'+data.data.iconPath);
-                if(data.data.status == 'ON_SALE')
+                if(data.data.status == '销售中')
                 {
                     $("#edit-status-div").html("<label><input name='goodsStatus' " +
                     "id='edit-goods-status' class=\"ace ace-switch ace-switch-5\" type=\"checkbox\" checked=\"checked\" value=\"true\"></input> " +
@@ -105,8 +106,7 @@ function editGoods(code) {
                                 success:function(data) {
                                     if(data.result.name=="SUCCESS"){
                                         $("#edit-goods-dialog").dialog("close");
-                                        $("#goods-table").dataTable().fnDestroy();
-                                        initTable("goods-table");
+                                        location.reload()
                                     }
                                     else {
                                         alert("修改数据错误，请重新尝试");

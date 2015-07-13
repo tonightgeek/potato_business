@@ -10,7 +10,6 @@
 
 <body>
 <ng-view></ng-view>
-
 <input type="hidden" id="applicationContext" value="${request.contextPath}"/>
 <asset:javascript src="web/home.js"></asset:javascript>
 </body>

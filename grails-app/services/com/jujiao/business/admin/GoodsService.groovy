@@ -11,7 +11,8 @@ class GoodsService {
         if (goods) {
 
             goods.goodName = params.names
-            goods.price = params.price.toFloat()
+            goods.basePrice = params.basePrice.toFloat()
+            goods.salePrice = params.salePrice.toFloat()
             goods.description = params.description
 
             if (params.goodsStatus) {

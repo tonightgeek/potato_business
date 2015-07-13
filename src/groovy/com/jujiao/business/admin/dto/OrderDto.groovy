@@ -3,6 +3,7 @@ package com.jujiao.business.admin.dto
 class OrderDto {
 
     String contactName
+    String orderSource
     String code
     String phone
     Float totalPrice

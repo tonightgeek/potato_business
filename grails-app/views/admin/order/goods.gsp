@@ -24,7 +24,7 @@
                 <tr>
                     <th>商品编号</th>
                     <th>商品名</th>
-                    <th>销售价格</th>
+                    <th>基础价格</th>
                     <th>商品状态</th>
                     <th></th>
                     <th></th>
@@ -44,9 +44,15 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" for="goods-sales-input">商品价格</label>
+            <label class="col-sm-3 control-label no-padding-right" for="goods-base-price">商品价</label>
             <div class="col-sm-6">
-                <input type="text" name="price" id="goods-sales-input" placeholder="商品价格" class="col-sm-12"></input>
+                <input type="text" name="basePrice" id="goods-base-price" placeholder="商品价格" class="col-sm-12"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="goods-sales-price">微信销售价</label>
+            <div class="col-sm-6">
+                <input type="text" name="salePrice" id="goods-sales-price" placeholder="微信销售价" class="col-sm-12"></input>
             </div>
         </div>
         <div class="form-group">
@@ -81,11 +87,18 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" for="edit-goods-price">商品价格</label>
+            <label class="col-sm-3 control-label no-padding-right" for="edit-goods-price">商品价</label>
             <div class="col-sm-6">
-                <input type="text" name="price" id="edit-goods-price" placeholder="商品价格" class="col-sm-12"></input>
+                <input type="text" name="basePrice" id="edit-goods-price" placeholder="商品价格" class="col-sm-12"></input>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="edit-goods-sales-price">微信销售价</label>
+            <div class="col-sm-6">
+                <input type="text" name="salePrice" id="edit-goods-sales-price" placeholder="微信销售价" class="col-sm-12"></input>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="edit-goods-description">商品介绍</label>
             <div class="col-sm-8">

@@ -6,15 +6,22 @@ class GoodsDto {
 
     String goodsCode
     String goodName
-    Float price
+    Float salePrice
+    Float basePrice
     String iconPath
     String description
     String status
     String sendScope
 
     public static GoodsDto fromGoods(Goods goods) {
-        return [goodsCode:goods.goodsCode,goodName:goods.goodName,price:goods.price,
-                iconPath:goods.iconPath,description:goods.description] as GoodsDto
+        def status = '销售中'
+
+        if (goods.goodsStatus == Goods.GoodsStatus.OFF_SALE) {
+            status = '下架'
+        }
+
+        return [goodsCode:goods.goodsCode,goodName:goods.goodName,basePrice:goods.basePrice,salePrice:goods.salePrice,
+                iconPath:goods.iconPath,description:goods.description,status:status] as GoodsDto
 
     }
 }

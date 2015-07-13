@@ -55,21 +55,18 @@ class GoodsController {
 //        }
 
         def totalRecords = detachedCriteria.count()
+        if (params.filterOffSale) {
+            detachedCriteria = detachedCriteria.build {
+                eq "goodsStatus",'ON_SALE'
+            }
+        }
         List<Goods> goodsList = detachedCriteria.list([max: params.length, offset: params.start, sort: sort, order: orderBy])
         CommonResult<List<GoodsDto>> results = new CommonResult<List<GoodsDto>>()
         List<GoodsDto> goodsDtoList = new ArrayList<GoodsDto>(goodsList.size())
         try {
             goodsList.each { goods ->
 
-                def status = '销售中'
-
-                if (goods.goodsStatus == Goods.GoodsStatus.OFF_SALE) {
-                    status = '下架'
-                }
-
-                def goodsDto = [goodsCode: goods.goodsCode, goodName: goods.goodName,
-                                price    : goods.price, status: status
-                ] as GoodsDto
+                def goodsDto = GoodsDto.fromGoods(goods)
                 goodsDtoList.add(goodsDto)
             }
 
@@ -92,9 +89,7 @@ class GoodsController {
             def goods = Goods.findByGoodsCode(params.code)
             if (goods) {
 
-                def goodsDto = [goodsCode: goods.goodsCode, goodName: goods.goodName, price: goods.price, iconPath: goods.iconPath, description: goods.description
-                                , status : goods.goodsStatus] as GoodsDto
-                results.setData(goodsDto)
+                results.setData(GoodsDto.fromGoods(goods))
 
             }
         } catch (Exception e) {
@@ -111,7 +106,7 @@ class GoodsController {
         try {
             def goodsCode = CommonUtils.generateSixCode()
             def goods = new Goods(goodsCode: goodsCode,
-                    goodName: params.names, price: params.price, description: params.description
+                    goodName: params.names, basePrice: params.basePrice,salePrice:params.salePrice, description: params.description
             )
             goods.save()
 

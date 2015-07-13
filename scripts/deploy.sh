@@ -4,7 +4,7 @@ set timeout 300
 expect "password*"
 send "dudu#folmos#0123456\n"
 expect "]# "
-send "ps -ef | grep tomcat | awk '{print \$2}' | xargs kill -15\n"
+send "ps -ef | grep tomcat | awk '{print \$2}' | xargs kill -9\n"
 expect "]# "
 send "cd /opt/software/apache-tomcat-8.0.23/webapps/ROOT\n"
 expect "]# "

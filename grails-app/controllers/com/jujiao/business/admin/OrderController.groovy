@@ -102,11 +102,11 @@ class OrderController {
         List<OrderDto> orderDtoList = new ArrayList<OrderDto>(orders.size())
         try {
             orders.each { order ->
-                def orderItemList = order.orderItem
-
                 def orderDto = [code    : order.code, totalPrice: order.totalPrice,
                                 address : order.address, phone: order.phone, dateCreated: order.dateCreated.format("yyyy-MM-dd HH:mm:ss"),
-                                sendDate: order.sendDate.format("yyyy-MM-dd HH:mm:ss"), contactName: order.contactName, orderStatus: order.orderStatus.displayValue] as OrderDto
+                                sendDate: order.sendDate.format("yyyy-MM-dd HH:mm:ss"), contactName: order.contactName, orderStatus: order.orderStatus.displayValue
+                ,orderSource:order.orderSource.displayValue
+                ] as OrderDto
                 orderDtoList.add(orderDto)
             }
 
@@ -142,7 +142,7 @@ class OrderController {
         try {
             def order = Orders.findByCode(params.code)
             def orderDto = [code:order.code,phone:order.phone,totalPrice:order.totalPrice,address:order.address,sendDate:order.sendDate.format("yyyy/MM/dd hh:mm:ss")
-            ,orderStatus: order.orderStatus.displayValue,contactName: order.contactName,remark:order.remark] as OrderDto
+            ,orderStatus: order.orderStatus.displayValue,contactName: order.contactName,remark:order.remark,orderSource: order.orderSource.displayValue] as OrderDto
             order.orderItem.each {
                 def orderItemDto = [goodsName:it.goods.goodName,count:it.count,totalPrice:it.totalPrice] as OrderItemDto
                 orderDto.orderItemDtoList.add(orderItemDto)

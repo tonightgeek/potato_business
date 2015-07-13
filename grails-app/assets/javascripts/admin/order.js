@@ -198,11 +198,11 @@ function initGoodsTable() {
             "serverSide":true,
             "searching":false,
             "ajax": {
-                "url":getApplicationContext()+"/admin/goods/list"
+                "url":getApplicationContext()+"/admin/goods/list?filterOffSale=true"
             },
             "columns":[
                 {"data":"goodName","searchable":false,orderable:false},
-                {"data":"price","searchable":false,orderable:false},
+                {"data":"basePrice","searchable":false,orderable:false},
                 {"data":"goodsCode","searchable":false,orderable:false,render:function(data, type, row){
                     return "<div class='action-buttons'><a href='#' onclick=\"addProduct(event,'" + data + "')\"><i class='ace-icon glyphicon glyphicon-plus green'></i></a>" +
                         "<input disabled='false' type='text' style='width:50px;' value='0' id='productCount_"+data+"'></input><a href='#' onclick=\"deduceProduct(event,'" + data + "')\"><i class='ace-icon glyphicon glyphicon-minus red'></i></a></div>";
@@ -272,6 +272,7 @@ function initOrderTable(tableId) {
                 {"data":"sendDate","searchable":false},
                 {"data":"dateCreated","searchable":false},
                 {"data":"orderStatus","searchable":false,ordable:false},
+                {"data":"orderSource","searchable":false,ordable:false},
                 {"data":"code","searchable":false,render:function(data, type, row){
                     return "<button class='btn btn-success btn-block' onclick='cancelOrder(\""+data+"\")'>取消</button>";
                 }},
@@ -290,6 +291,7 @@ function showOrder(orderCode) {
         $("#view-order-send-time").html(data.data.sendDate);
         $("#view-order-remark").html(data.data.remark);
         $("#view-order-status").html(data.data.orderStatus);
+        $("#view-order-source").html(data.data.orderSource);
         $("#view-order-total-price").html(data.data.totalPrice);
         var orderItemDtoList = data.data.orderItemDtoList,
             orderItemResult = '';

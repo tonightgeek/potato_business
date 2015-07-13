@@ -31,7 +31,6 @@
 .goodsitem h5 span{
     font-size: 16px;
     margin-top: 15px;
-    color: red;
     text-align: right;
 }
 
@@ -62,7 +61,7 @@
     width: 25%;
     height: 40px;
     margin-bottom: 30px;
-    font-size: 20px;
+    font-size: 14px;
     letter-spacing: 5px;
     display: inline-block;
 }

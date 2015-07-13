@@ -21,8 +21,9 @@
 </head>
 
 <body ng-app="main">
+<input type="hidden" id="applicationContext" value="${request.contextPath}"/>
 <g:layoutBody/>
 
-<input type="hidden" id="applicationContext" value="${request.contextPath}"/>
+
 </body>
 </html>

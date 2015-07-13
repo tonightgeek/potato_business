@@ -1,38 +1,44 @@
 package potato_business
 
+import com.jujiao.business.common.CommonUtils
 import org.apache.commons.logging.LogFactory
 
+import javax.servlet.http.Cookie
 import java.text.MessageFormat
 
 class AuthFilters {
 
-    def cookieService
     private static final log = LogFactory.getLog(this)
 
     def filters = {
 
-        someUri(uri:'/homepage/**'){
+        someUri(uri:'/web/**'){
             before = {
                 try {
                     if (grailsApplication.config.current.environment.name == 'prod') {
-                        log.error('start web interceptor')
-                        if (!cookieService.getCookie("unionid")) {
-                            log.error("error get unionid")
+
+                        String unionid = CommonUtils.getCookieValue(request,"unionid")
+
+                        if (!unionid) {
+
+                            log.error("actionname" + actionName + "error get unionid")
                             def redirectUrl = MessageFormat.format(grailsApplication.config.weixin.oauth2.url, [grailsApplication.config.wechat.config.appid,
                                                                                                                 URLEncoder.encode(grailsApplication.config.weixin.oauth2.redirectUri)].toArray())
                             redirect(url: redirectUrl)
                             return false
                         } else {
-                            log.error("unionid----" + cookieService.getCookie("unionid"))
+                            log.error("actionname----" + actionName + " unionid----" + unionid)
                             return true
                         }
                     }
                     else {
-                        if (!cookieService.getCookie("unionid")) {
-                            cookieService.setCookie("unionid","123456789")
+
+
+
+                        if (!CommonUtils.getCookieValue(request,"unionid")) {
+                            CommonUtils.addCookie(response,"unionid","123456789")
                         }
                         else {
-                            log.error("dev unionid----" + cookieService.getCookie("unionid"))
                             return true
                         }
                     }
