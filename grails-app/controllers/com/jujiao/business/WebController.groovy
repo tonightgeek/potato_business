@@ -2,13 +2,12 @@ package com.jujiao.business
 
 import com.jujiao.business.admin.dto.GoodsDto
 import com.jujiao.business.common.CommonResult
-import com.jujiao.business.common.CommonUtils
-import com.jujiao.business.wechat.Homepage.StartOrderDto
-import com.jujiao.business.wechat.Homepage.StartOrderItemDto
+import com.jujiao.business.utils.CommonUtils
+import com.jujiao.business.utils.OrderReminderUtils
+import com.jujiao.business.wechat.dto.StartOrderDto
+import com.jujiao.business.wechat.dto.StartOrderItemDto
 import grails.converters.JSON
 import org.apache.commons.logging.LogFactory
-
-import javax.servlet.http.Cookie
 
 class WebController {
 
@@ -29,7 +28,7 @@ class WebController {
             result.data = goodsDtoList
         } catch (Exception e) {
             result.result = CommonResult.CommonResultStatus.FAIL
-            log.error(e)
+            log.error("listgoods error",e)
         }
 
         render result as JSON
@@ -66,7 +65,7 @@ class WebController {
         }
         catch (Exception e) {
             result.result = CommonResult.CommonResultStatus.FAIL
-            log.error(e)
+            log.error("startorder error",e)
         }
         render result as JSON
 
@@ -135,10 +134,13 @@ class WebController {
             result.data=true
         } catch (Exception e) {
             result.result = CommonResult.CommonResultStatus.FAIL
-            log.error(e)
+            log.error("createorder error",e)
         }
 
         render result as JSON
     }
+
+
+
 
 }

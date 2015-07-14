@@ -102,7 +102,7 @@ weixin.oauth2.url='https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}
 weixin.oauth2.accesstoken.url="https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code"
 weixin.oauth2.redirectUri='http://sales.dodopotato.com/wechat/authRedirectUrl'
 
-grails.rest.injectInto = ['Controller','Service','com.jujiao.business.common.WechatUtils']
+grails.rest.injectInto = ['Controller','Service','com.jujiao.business.utils.WechatUtils']
 
 
 quartz {

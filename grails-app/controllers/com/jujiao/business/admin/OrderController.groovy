@@ -7,6 +7,7 @@ import com.jujiao.business.admin.dto.OrderItemDto
 import com.jujiao.business.common.CommonResult
 import com.jujiao.business.Orders
 import com.jujiao.business.admin.dto.OrderDto
+import com.jujiao.business.utils.OrderReminderUtils
 import grails.converters.JSON
 import grails.gorm.DetachedCriteria
 import org.apache.commons.logging.LogFactory
@@ -217,5 +218,14 @@ class OrderController {
         }
         render results as JSON
 
+    }
+
+    def getReminderOrderCount() {
+        try {
+            render(OrderReminderUtils.getReminderCount(), contentType: "text/plain", encoding: "utf-8")
+        }
+        catch (Exception e) {
+            log.error("getReminderOrderCount error",e)
+        }
     }
 }

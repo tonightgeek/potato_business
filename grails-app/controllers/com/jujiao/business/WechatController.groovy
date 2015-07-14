@@ -1,10 +1,7 @@
 package com.jujiao.business
 
-import com.jujiao.business.common.CommonUtils
-import groovy.xml.MarkupBuilder
+import com.jujiao.business.utils.CommonUtils
 import org.apache.commons.logging.LogFactory
-
-import javax.servlet.http.Cookie
 
 import static groovyx.net.http.ContentType.JSON
 

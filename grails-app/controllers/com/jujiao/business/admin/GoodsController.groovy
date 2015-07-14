@@ -3,8 +3,7 @@ package com.jujiao.business.admin
 import com.jujiao.business.Goods
 import com.jujiao.business.admin.dto.GoodsDto
 import com.jujiao.business.common.CommonResult
-import com.jujiao.business.common.CommonUtils
-import com.sun.org.apache.xpath.internal.operations.Bool
+import com.jujiao.business.utils.CommonUtils
 import grails.converters.JSON
 import grails.gorm.DetachedCriteria
 import org.apache.commons.logging.LogFactory

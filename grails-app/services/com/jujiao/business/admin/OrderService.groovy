@@ -6,7 +6,7 @@ import com.jujiao.business.OrderItem
 import com.jujiao.business.OrderPrint
 import com.jujiao.business.Orders
 import com.jujiao.business.admin.command.OrderCommand
-import com.jujiao.business.common.CommonUtils
+import com.jujiao.business.utils.CommonUtils
 import grails.transaction.Transactional
 import org.apache.commons.logging.LogFactory
 

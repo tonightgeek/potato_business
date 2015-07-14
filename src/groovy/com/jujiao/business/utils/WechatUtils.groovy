@@ -1,4 +1,4 @@
-package com.jujiao.business.common
+package com.jujiao.business.utils
 
 import grails.converters.JSON
 import grails.plugin.cache.CachePut

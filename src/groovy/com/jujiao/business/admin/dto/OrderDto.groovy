@@ -12,5 +12,6 @@ class OrderDto {
     String sendDate
     String orderStatus
     String remark
+    boolean hasPrinted
     def orderItemDtoList = [].withLazyDefault {return new OrderItemDto()}
 }

@@ -1,5 +1,7 @@
 package com.jujiao.business
 
+import com.jujiao.business.utils.OrderReminderUtils
+
 class Orders {
 
     String code
@@ -58,11 +60,13 @@ class Orders {
     def afterInsert = {
         def orderPrint = new OrderPrint(orderCode: this.code,hasPrint: false)
         orderPrint.save()
+        OrderReminderUtils.increaseReminder()
     }
 
     static constraints = {
         remark nullable: true,blank: true
         cancelReason nullable: true,blank: true
+        hasPrinted nullable:true,blank:true
     }
 
     static mapping = {

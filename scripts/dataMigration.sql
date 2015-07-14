@@ -1,0 +1,1 @@
+alter table orders add column has_printed bit not null

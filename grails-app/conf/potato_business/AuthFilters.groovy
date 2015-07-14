@@ -1,9 +1,8 @@
 package potato_business
 
-import com.jujiao.business.common.CommonUtils
+import com.jujiao.business.utils.CommonUtils
 import org.apache.commons.logging.LogFactory
 
-import javax.servlet.http.Cookie
 import java.text.MessageFormat
 
 class AuthFilters {

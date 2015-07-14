@@ -1,4 +1,4 @@
-package com.jujiao.business.common
+package com.jujiao.business.utils
 
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest

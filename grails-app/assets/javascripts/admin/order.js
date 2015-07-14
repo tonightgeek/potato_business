@@ -217,6 +217,19 @@ $(document).ready(
             }]
         });
         $("#add-remark-dialog").dialog("close");
+
+        setInterval(function(){
+            $.ajax({
+                    url: getApplicationContext() + "/admin/order/getReminderOrderCount",
+                    success:function(data, textStatus) {
+                        alert(data);
+                    },
+                    error:function() {
+
+                    }
+                }
+            );
+        },60000)
     }
 );
 
@@ -295,7 +308,8 @@ function initOrderTable(tableId) {
             "columns":[
                 {"data":"contactName","searchable":false,orderable:false},
                 {"data":"address","searchable":false,orderable:false},
-                {"data":"totalPrice","searchable":false},
+                {"data":"phone","searchable":false,orderable:false},
+                {"data":"totalPrice","searchable":false,orderable:false},
                 {"data":"sendDate","searchable":false},
                 {"data":"dateCreated","searchable":false},
                 {"data":"orderStatus","searchable":false,ordable:false},
