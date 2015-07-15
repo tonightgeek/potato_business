@@ -308,9 +308,17 @@ function initOrderTable(tableId) {
                 "url":getApplicationContext()+"/admin/order/list"
             },
             "columns":[
-                {"data":"contactName","searchable":false,orderable:false},
-
-                {"data":"address","searchable":false,orderable:false},
+                {"data":function(row, type, val, meta){
+                    if(row.hasPrinted == false) {
+                        return "<img src='"+getApplicationContext()+"/assets/gif012.gif'></img>"+row.contactName
+                    }
+                    else {
+                        return row.contactName
+                    }
+                },"searchable":false,orderable:false},
+                {"data":function(row, type, val, meta) {
+                    return  row.address
+                },"searchable":false,orderable:false},
                 {"data":"phone","searchable":false,orderable:false},
                 {"data":"totalPrice","searchable":false,orderable:false},
                 {"data":"sendDate","searchable":false},

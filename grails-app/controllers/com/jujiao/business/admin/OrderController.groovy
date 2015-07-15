@@ -107,7 +107,7 @@ class OrderController {
                 def orderDto = [code    : order.code, totalPrice: order.totalPrice,
                                 address : order.address, phone: order.phone, dateCreated: order.dateCreated.format("yyyy-MM-dd HH:mm:ss"),
                                 sendDate: order.sendDate.format("yyyy-MM-dd HH:mm:ss"), contactName: order.contactName, orderStatus: order.orderStatus.displayValue
-                ,orderSource:order.orderSource.displayValue
+                ,orderSource:order.orderSource.displayValue,hasPrinted:order.hasPrinted
                 ] as OrderDto
                 orderDtoList.add(orderDto)
             }
@@ -168,6 +168,15 @@ class OrderController {
                     def orderItemDto = [goodsName: it.goods.goodName, count: it.count, totalPrice: it.totalPrice] as OrderItemDto
                     orderDto.orderItemDtoList.add(orderItemDto)
                 }
+
+                OrderPrint orderPrint = OrderPrint.findByOrderCode(order.getCode())
+                orderPrint.hasPrint = true
+                orderPrint.save(flush: true)
+
+
+                order.hasPrinted = true
+                order.save(flush: true)
+
                 orderList.add(orderDto)
             }
             if (params.printAll) {
@@ -184,6 +193,8 @@ class OrderController {
                             orderDto.orderItemDtoList.add(orderItemDto)
                         }
                     }
+                    order.hasPrinted = true
+                    order.save(flush: true)
                     orderPrint.hasPrint = true
                     orderPrint.save(flush: true)
                 }
