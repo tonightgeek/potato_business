@@ -61,6 +61,15 @@
                 <textarea style="height: 100px;" name="description" class="form-control" id="goods-description-input"></textarea>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="goods-inventory-input">商品库存</label>
+            <div class="col-sm-8">
+                <input type="text" name="inventory" class="form-control" value="0" id="goods-inventory-input"></input>
+            </div>
+        </div>
+
+
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="goods-image">商品照片</label>
 
@@ -105,15 +114,22 @@
                 <textarea style="height: 100px;" name="description" class="form-control" id="edit-goods-description"></textarea>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" for="edit-goods-description">在线销售</label>
-            <div class="col-sm-8" id="edit-status-div">
-                <label>
 
-                    <input name="goodsStatus" id="edit-goods-status"  type="checkbox" value="true"></input>
-                    <span class="lbl"></span>
-                </label>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="edit-goods-inventory">商品库存</label>
+            <div class="col-sm-8">
+                <input type="text" name="inventory" class="form-control" id="edit-goods-inventory"></input>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">商品状态</label>
+            <div class="col-sm-8">
+                <button class="btn btn-warning" data-toggle="button" id="status_on_sale" onclick="changeGoodStatus(this)">在售</button>
+                <button class="btn btn-warning" data-toggle="button" id="status_off_sale" onclick="changeGoodStatus(this)">下架</button>
+                <button class="btn btn-warning" data-toggle="button" id="status_over_sale" onclick="changeGoodStatus(this)">售罄</button>
+            </div>
+            <input type="hidden" id="editGoodsStatus" name="goodsStatus"/>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="edit-goods-image">商品照片</label>

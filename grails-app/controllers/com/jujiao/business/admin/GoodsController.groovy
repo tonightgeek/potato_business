@@ -61,16 +61,21 @@ class GoodsController {
         }
         List<Goods> goodsList = detachedCriteria.list([max: params.length, offset: params.start, sort: sort, order: orderBy])
         CommonResult<List<GoodsDto>> results = new CommonResult<List<GoodsDto>>()
-        List<GoodsDto> goodsDtoList = new ArrayList<GoodsDto>(goodsList.size())
-        try {
-            goodsList.each { goods ->
 
-                def goodsDto = GoodsDto.fromGoods(goods)
-                goodsDtoList.add(goodsDto)
+        try {
+            if (goodsList) {
+                List<GoodsDto> goodsDtoList = new ArrayList<GoodsDto>(goodsList.size())
+                goodsList.each { goods ->
+                    def goodsDto = GoodsDto.fromGoods(goods)
+                    goodsDtoList.add(goodsDto)
+                }
+                results.data = goodsDtoList
+            }
+            else {
+                results.data = null
             }
 
-            results.data = goodsDtoList
-//            results.currentPage = params.page
+
             results.recordsTotal = totalRecords
             results.recordsFiltered = totalRecords
         }
@@ -105,7 +110,8 @@ class GoodsController {
         try {
             def goodsCode = CommonUtils.generateSixCode()
             def goods = new Goods(goodsCode: goodsCode,
-                    goodName: params.names, basePrice: params.basePrice,salePrice:params.salePrice, description: params.description
+                    goodName: params.names, basePrice: params.basePrice,salePrice:params.salePrice, description: params.description,
+                    inventory: params.inventory
             )
             goods.save()
 

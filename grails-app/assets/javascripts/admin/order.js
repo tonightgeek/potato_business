@@ -203,9 +203,10 @@ $(document).ready(
         });
         $("#add-remark-dialog").dialog("close");
 
-
     }
 );
+
+
 
 
 function checkReminderCount() {
@@ -311,16 +312,17 @@ function initOrderTable(tableId) {
                 {"data":function(row, type, val, meta){
                     var result = "";
                     if(row.isMemberFirstOrder) {
-                        result += "<span style='color: red;'>电&nbsp;</span>";
+                        result += "<span style='color: red;'>首单&nbsp;</span>";
                     }
 
                     if(row.hasPrinted == false) {
-                        return result+ "<img src='"+getApplicationContext()+"/assets/gif012.gif'></img>"+row.contactName
+                        return result+ "<img src='"+getApplicationContext()+"/gif012.gif'></img>"+row.orderSeries
                     }
                     else {
-                        return result+ row.contactName
+                        return result+ row.orderSeries
                     }
                 },"searchable":false,orderable:false},
+                {"data":"contactName","searchable":false,orderable:false},
                 {"data":function(row, type, val, meta) {
                     return  row.address
                 },"searchable":false,orderable:false},

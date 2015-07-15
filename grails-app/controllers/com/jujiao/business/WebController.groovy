@@ -19,7 +19,7 @@ class WebController {
     def listgoods() {
         CommonResult<List<GoodsDto>> result = new CommonResult<List<GoodsDto>>()
         try {
-            def goodsList = Goods.findAllByGoodsStatus("ON_SALE",[sort:"dateCreated",order:"desc"])
+            def goodsList = Goods.findAllByGoodsStatusInList(["ON_SALE","OVER_SALE"],[sort:"dateCreated",order:"desc"])
             def goodsDtoList = []
 
             goodsList.each { it ->

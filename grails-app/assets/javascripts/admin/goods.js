@@ -73,6 +73,28 @@ function initTable(tableId) {
         });
 }
 
+function changeGoodStatus(element) {
+    var elements = ['status_on_sale','status_off_sale','status_over_sale'];
+    //if($(element).hasClass("active")){
+    //    $(element).attr("aria-pressed", false);
+    //    $(element).removeClass("active");
+    //}else {
+    //    $(element).attr("aria-pressed", true);
+    //    $(element).addClass("active");
+    //}
+    for(var i = 0;i<elements.length;i++) {
+        var eleId = elements[i];
+        if(eleId != $(element).attr("id")){
+            $("#"+ eleId).attr("aria-pressed", false);
+            if($("#"+ eleId).hasClass("active")){
+                $("#"+ eleId).removeClass("active");
+            }
+
+
+        }
+    }
+}
+
 function editGoods(code) {
     $("#edit-goods-code").val(code);
     clearElementsValue(['edit-goods-name','edit-goods-price','edit-goods-description','edit-goods-sales-price']);
@@ -83,17 +105,25 @@ function editGoods(code) {
             success:function(data) {
                 setElementsValue(['edit-goods-name','edit-goods-price','edit-goods-description','edit-goods-sales-price'],[data.data.goodName,data.data.basePrice,
                 data.data.description,data.data.salePrice]);
+                $("#status_on_sale").attr("aria-pressed", false);
+                $("#status_on_sale").removeClass("active");
+                $("#status_off_sale").attr("aria-pressed", false);
+                $("#status_off_sale").removeClass("active");
+                $("#status_over_sale").attr("aria-pressed", false);
+                $("#status_over_sale").removeClass("active");
                 $("#edit-goods-img-path").attr("src", getApplicationContext()+'/'+data.data.iconPath);
-                if(data.data.status == '销售中')
+                if(data.data.status == '在售')
                 {
-                    $("#edit-status-div").html("<label><input name='goodsStatus' " +
-                    "id='edit-goods-status' class=\"ace ace-switch ace-switch-5\" type=\"checkbox\" checked=\"checked\" value=\"true\"></input> " +
-                    "<span class=\"lbl\"></span> </label>");
+                    $("#status_on_sale").attr("aria-pressed", true);
+                    $("#status_on_sale").addClass("active");
                 }
-                else {
-                    $("#edit-status-div").html("<label><input name=\"goodsStatus\" " +
-                    "id=\"edit-goods-status\" class=\"ace ace-switch ace-switch-5\" type=\"checkbox\" value=\"true\"></input> " +
-                    "<span class=\"lbl\"></span> </label>");
+                else if(data.data.status == '下架'){
+                    $("#status_off_sale").attr("aria-pressed", true);
+                    $("#status_off_sale").addClass("active");
+                }
+                else if(data.data.status == '售罄'){
+                    $("#status_over_sale").attr("aria-pressed", true);
+                    $("#status_over_sale").addClass("active");
                 }
 
                 $("#edit-goods-dialog").dialog({
@@ -102,6 +132,15 @@ function editGoods(code) {
                     buttons:[{
                         text:"修改商品",
                         click:function() {
+
+                            if($("#status_on_sale").attr("aria-pressed") == "true") {
+                                $("#editGoodsStatus").val("ON_SALE");
+                            }else if($("#status_off_sale").attr("aria-pressed") == "true") {
+                                $("#editGoodsStatus").val("OFF_SALE");
+                            }else if($("#status_over_sale").attr("aria-pressed") == "true") {
+                                $("#editGoodsStatus").val("OVER_SALE");
+                            }
+
                             $("#goods-edit-form").ajaxSubmit({
                                 success:function(data) {
                                     if(data.result.name=="SUCCESS"){

@@ -15,11 +15,14 @@ class GoodsService {
             goods.salePrice = params.salePrice.toFloat()
             goods.description = params.description
 
-            if (params.goodsStatus) {
+            if (params.goodsStatus == "ON_SALE") {
                 goods.goodsStatus = Goods.GoodsStatus.ON_SALE
             }
-            else {
+            else if (params.goodsStatus == "OFF_SALE"){
                 goods.goodsStatus = Goods.GoodsStatus.OFF_SALE
+            }
+            if (params.goodsStatus == "OVER_SALE") {
+                goods.goodsStatus = Goods.GoodsStatus.OVER_SALE
             }
 
             def file = request.getFile('file')

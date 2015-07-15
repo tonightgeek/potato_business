@@ -187,13 +187,17 @@ app.controller("homeController", function ($scope,$routeParams,$http,application
         .success(function(data, status, headers, config){
             if(data.result.name == 'SUCCESS'){
                 $scope.goodslist = data.data;
-                angular.forEach(data.data,function(good) {
-                    if(good.salePrice != good.basePrice) {
+                angular.forEach(data.data, function (good) {
+                    if (good.salePrice != good.basePrice) {
                         good.hasDifference = true
                     }
-                    good.iconPath = applicationContext + "/" +good.iconPath;
+                    good.iconPath = applicationContext + "/" + good.iconPath;
                     good.orderCount = 0;
-                })
+                    if(good.status == "售罄") {
+                        good.has_saled = true;
+                    }
+                });
+
             }
         })
         .error(function(data, status, headers, config){

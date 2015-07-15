@@ -56,6 +56,9 @@
     <g:each in="${orderList}" status="i" var="order">
         <div class="orderdisplay">
             <div>
+                <span>订单序号:</span><span>${order.orderSeries}</span>
+            </div>
+            <div>
                 <span>联系人:</span><span>${order.contactName}</span>
             </div>
             <div>
@@ -68,7 +71,7 @@
                 <span>送达时间:</span><span>${order.sendDate}</span>
             </div>
             <div>
-                <span>订单备注:</span><span>${order.sendDate}</span>
+                <span>订单备注:</span><span>${order.remark}</span>
             </div>
             <div>
                 <span>订单总价:</span><span>${order.totalPrice}</span>

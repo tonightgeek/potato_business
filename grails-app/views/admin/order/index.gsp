@@ -49,6 +49,7 @@
                 <table id="order-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample-table-2_info">
                     <thead>
                         <tr>
+                            <th>订单序号</th>
                             <th>联系人</th>
                             <th>联系地址</th>
                             <th>联系电话</th>

@@ -9,13 +9,24 @@ class Goods {
     String iconPath
     String description
     String sendScope
+    int inventory
     GoodsStatus goodsStatus = GoodsStatus.ON_SALE
 
     Date dateCreated
     Date lastUpdated
 
     public enum GoodsStatus{
-        ON_SALE,OFF_SALE
+        ON_SALE('在售'),OFF_SALE('下架'),OVER_SALE('售罄')
+
+        String displayValue
+
+        GoodsStatus(String displayValue = '') {
+            this.displayValue = displayValue
+        }
+
+        public String getDisplayValue() {
+            return this.displayValue
+        }
     }
 
 
@@ -28,6 +39,6 @@ class Goods {
     static mapping = {
         autoTimestamp true
         sort dateCreated: "desc"
-
+        inventory defaultValue:0
     }
 }

@@ -1,6 +1,7 @@
 package com.jujiao.business
 
 import com.jujiao.business.utils.OrderReminderUtils
+import com.jujiao.business.utils.OrderSeriesUtils
 
 class Orders {
 
@@ -14,6 +15,7 @@ class Orders {
     OrderSource orderSource
     String remark
     String cancelReason
+    String orderSeries
 
     boolean hasPrinted = false
     boolean isMemberFirstOrder = false
@@ -66,6 +68,8 @@ class Orders {
             this.isMemberFirstOrder =true
         }
 
+        String series = "0000"+OrderSeriesUtils.increaseAndGetOrderSeries()
+        this.orderSeries = series.substring(series.size()-4)
         OrderReminderUtils.increaseReminder()
     }
 
@@ -73,6 +77,7 @@ class Orders {
         remark nullable: true,blank: true
         cancelReason nullable: true,blank: true
         hasPrinted nullable:true,blank:true
+        orderSeries nullable: true,blank: true
     }
 
     static mapping = {
@@ -85,5 +90,6 @@ class Orders {
         orderStatus(enumType: "ordinal")
         sort dateCreated: "desc"
         orderSource length: 20
+        orderSeries length: 20
     }
 }

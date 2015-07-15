@@ -101,25 +101,36 @@ class OrderController {
         def totalRecords = detachedCriteria.count()
         List<Orders> orders = detachedCriteria.list([max:params.length,offset:params.start,sort:sort,order:orderBy])
         CommonResult<List<OrderDto>> results = new CommonResult<List<OrderDto>>()
-        List<OrderDto> orderDtoList = new ArrayList<OrderDto>(orders.size())
-        try {
-            orders.each { order ->
-                def orderDto = [code    : order.code, totalPrice: order.totalPrice,
-                                address : order.address, phone: order.phone, dateCreated: order.dateCreated.format("yyyy-MM-dd HH:mm:ss"),
-                                sendDate: order.sendDate.format("yyyy-MM-dd HH:mm:ss"), contactName: order.contactName, orderStatus: order.orderStatus.displayValue
-                ,orderSource:order.orderSource.displayValue,hasPrinted:order.hasPrinted,isMemberFirstOrder:order.isMemberFirstOrder
-                ] as OrderDto
-                orderDtoList.add(orderDto)
-            }
 
-            results.data = orderDtoList
-            results.recordsTotal = totalRecords
-            results.recordsFiltered = totalRecords
+        if(orders)
+        {
+            List<OrderDto> orderDtoList = new ArrayList<OrderDto>(orders.size())
+            try {
+                orders.each { order ->
+                    def orderDto = [code    : order.code, totalPrice: order.totalPrice,
+                                    address : order.address, phone: order.phone, dateCreated: order.dateCreated.format("yyyy-MM-dd HH:mm:ss"),
+                                    sendDate: order.sendDate.format("yyyy-MM-dd HH:mm:ss"), contactName: order.contactName,
+                                    orderStatus: order.orderStatus.displayValue,orderSeries:order.orderSeries
+                    ,orderSource:order.orderSource.displayValue,hasPrinted:order.hasPrinted,isMemberFirstOrder:order.isMemberFirstOrder
+                    ] as OrderDto
+                    orderDtoList.add(orderDto)
+                }
+
+                results.data = orderDtoList
+                results.recordsTotal = totalRecords
+                results.recordsFiltered = totalRecords
+            }
+            catch (Exception e) {
+                results.result=CommonResult.CommonResultStatus.FAIL
+                log.error('list order error ',e)
+            }
         }
-        catch (Exception e) {
-            results.result=CommonResult.CommonResultStatus.FAIL
-            log.error('list order error ',e)
+        else {
+            results.data = null
+            results.recordsTotal = 0
+            results.recordsFiltered = 0
         }
+
 
         render results as JSON
     }
@@ -144,7 +155,8 @@ class OrderController {
         try {
             def order = Orders.findByCode(params.code)
             def orderDto = [code:order.code,phone:order.phone,totalPrice:order.totalPrice,address:order.address,sendDate:order.sendDate.format("yyyy/MM/dd hh:mm:ss")
-            ,orderStatus: order.orderStatus.displayValue,contactName: order.contactName,remark:order.remark,orderSource: order.orderSource.displayValue] as OrderDto
+            ,orderStatus: order.orderStatus.displayValue,contactName: order.contactName,remark:order.remark,orderSource: order.orderSource.displayValue,
+            orderSeries:order.orderSeries] as OrderDto
             order.orderItem.each {
                 def orderItemDto = [goodsName:it.goods.goodName,count:it.count,totalPrice:it.totalPrice] as OrderItemDto
                 orderDto.orderItemDtoList.add(orderItemDto)
@@ -163,7 +175,8 @@ class OrderController {
             if (params.orderCode) {
                 def order = Orders.findByCode(params.orderCode)
                 def orderDto = [code         : order.code, phone: order.phone, totalPrice: order.totalPrice, address: order.address, sendDate: order.sendDate.format("yyyy/MM/dd hh:mm:ss")
-                                , orderStatus: order.orderStatus.displayValue, contactName: order.contactName, remark: order.remark, orderSource: order.orderSource.displayValue] as OrderDto
+                                , orderStatus: order.orderStatus.displayValue, contactName: order.contactName, remark: order.remark,
+                                orderSource: order.orderSource.displayValue,orderSeries:order.orderSeries] as OrderDto
                 order.orderItem.each {
                     def orderItemDto = [goodsName: it.goods.goodName, count: it.count, totalPrice: it.totalPrice] as OrderItemDto
                     orderDto.orderItemDtoList.add(orderItemDto)
@@ -186,7 +199,8 @@ class OrderController {
                     if(order && order.orderStatus == Orders.OrderStatus.PLACE)
                     {
                         def orderDto = [code         : order.code, phone: order.phone, totalPrice: order.totalPrice, address: order.address, sendDate: order.sendDate.format("yyyy/MM/dd hh:mm:ss")
-                                        , orderStatus: order.orderStatus.displayValue, contactName: order.contactName, remark: order.remark, orderSource: order.orderSource.displayValue] as OrderDto
+                                        , orderStatus: order.orderStatus.displayValue, contactName: order.contactName, remark: order.remark, orderSource: order.orderSource.displayValue
+                        ,orderSeries:order.orderSeries] as OrderDto
                         orderList.add(orderDto)
                         order.orderItem.each {
                             def orderItemDto = [goodsName:it.goods.goodName,count:it.count,totalPrice:it.totalPrice] as OrderItemDto

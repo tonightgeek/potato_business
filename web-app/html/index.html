@@ -9,11 +9,13 @@
                 <span style="display: block;" ng-show="{{good.hasDifference}}">单价:{{good.basePrice}}<span style="color: red;padding-left: 15px;font-size: 16px;">促销价:{{good.salePrice}}</span></span>
                 <span style="display: block;" ng-show="{{!good.hasDifference}}">单价:{{good.basePrice}}</span>
             </h5>
-
             <div class="description">
                 {{good.description}}
             </div>
-            <div class="order-area">
+            <div ng-show="{{good.has_saled}}" class="order-area" style="text-align: center;width: 100%;padding-bottom: 10px;">
+                <div style="width: 90%;text-align: center;font-size: 14px;color: red;background-color: #fecb56;line-height: 40px;">对不起,菜品已售完,我们正在赶工!!</div>
+            </div>
+            <div ng-hide="{{good.has_saled}}" class="order-area">
                 <button ng-click='addGood(good.goodsCode)'>来一份</button>
                 <span>{{good.orderCount}}</span>
                 <button ng-click='deduceGood(good.goodsCode)'>少一份</button>
