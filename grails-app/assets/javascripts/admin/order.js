@@ -1,23 +1,20 @@
 $(document).ready(
     function() {
         activeMenu("order-menu-li");
-
-        var table = initOrderTable("order-table"),
+        var table = initOrderTable("order-table");
         startDatePicker = $("#orderTimeStartDatePicker").datepicker({
             showButtonPanel:true,
             onSelect:function(date,datePicker){
                 $("#orderTimeStart").val(date);
                 $(this).hide();
             }
-        }).hide(),
-
+        }).hide();
         endDatePicker = $("#orderTimeEndDatePicker").datepicker({
             onSelect:function(date,datePicker){
                 $("#orderTimeEnd").val(date);
                 $(this).hide();
             }
-        }).hide(),
-
+        }).hide();
         sendTimeStartPicker = $("#sendTimeStartDatePicker").datepicker({
             showButtonPanel:true,
             onSelect:function(date,datePicker){
@@ -56,6 +53,7 @@ $(document).ready(
                 table = initOrderTable("order-table");
             }
         );
+
 
         $("#create-order-dialog").dialog({
             modal:true,
@@ -149,19 +147,6 @@ $(document).ready(
 
         initGoodsTable();
 
-        $("#create-order-button").click(
-            function() {
-                $("#create-order-dialog").dialog("open");
-                clearElementsValue(['create-order-order-contact','create-order-order-phone','create-order-order-address',
-                'create-order-send-time','create-order-remark']);
-                $("#change-member-contract-name").val('false');
-                $("#change-member-contract-name").prev().attr("class","");
-                $("#change-member-contract-address").val('false');
-                $("#change-member-contract-address").prev().attr("class","");
-                $("#goods-list").html("");
-            }
-        );
-
         $("#create-order-order-phone").blur(
             function() {
                 var mobile = $("#create-order-order-phone").val();
@@ -218,20 +203,37 @@ $(document).ready(
         });
         $("#add-remark-dialog").dialog("close");
 
-        setInterval(function(){
-            $.ajax({
-                    url: getApplicationContext() + "/admin/order/getReminderOrderCount",
-                    success:function(data, textStatus) {
-                        alert(data);
-                    },
-                    error:function() {
 
-                    }
-                }
-            );
-        },60000)
     }
 );
+
+
+function checkReminderCount() {
+    $.ajax({
+            url: getApplicationContext() + "/admin/order/getReminderOrderCount",
+            success:function(data, textStatus) {
+                $("#orderReminder").html("2分钟内新增订单数:"+data);
+            },
+            error:function() {
+
+            }
+        }
+    );
+}
+
+var interval = setInterval(checkReminderCount, 120000);
+
+function openCreateOrderDialog() {
+    $("#create-order-dialog").dialog("open");
+    clearElementsValue(['create-order-order-contact','create-order-order-phone','create-order-order-address',
+        'create-order-send-time','create-order-remark']);
+    $("#change-member-contract-name").val('false');
+    $("#change-member-contract-name").prev().attr("class","");
+    $("#change-member-contract-address").val('false');
+    $("#change-member-contract-address").prev().attr("class","");
+    $("#goods-list").html("");
+}
+
 
 function initGoodsTable() {
     $("#goods-table").dataTable(
@@ -307,11 +309,11 @@ function initOrderTable(tableId) {
             },
             "columns":[
                 {"data":"contactName","searchable":false,orderable:false},
+
                 {"data":"address","searchable":false,orderable:false},
                 {"data":"phone","searchable":false,orderable:false},
                 {"data":"totalPrice","searchable":false,orderable:false},
                 {"data":"sendDate","searchable":false},
-                {"data":"dateCreated","searchable":false},
                 {"data":"orderStatus","searchable":false,ordable:false},
                 {"data":"orderSource","searchable":false,ordable:false},
                 {"data":"code","searchable":false,render:function(data, type, row){

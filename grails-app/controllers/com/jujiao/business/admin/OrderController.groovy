@@ -12,7 +12,6 @@ import grails.converters.JSON
 import grails.gorm.DetachedCriteria
 import org.apache.commons.logging.LogFactory
 
-import javax.persistence.criteria.Order
 
 class OrderController {
 
@@ -175,11 +174,15 @@ class OrderController {
                 def orderPrintList = OrderPrint.findAllByHasPrint(false,[max: 5, offset: 0])
                 for (OrderPrint orderPrint : orderPrintList) {
                     def order = Orders.findByCode(orderPrint.orderCode)
-                    if(order.orderStatus == Orders.OrderStatus.PLACE)
+                    if(order && order.orderStatus == Orders.OrderStatus.PLACE)
                     {
                         def orderDto = [code         : order.code, phone: order.phone, totalPrice: order.totalPrice, address: order.address, sendDate: order.sendDate.format("yyyy/MM/dd hh:mm:ss")
                                         , orderStatus: order.orderStatus.displayValue, contactName: order.contactName, remark: order.remark, orderSource: order.orderSource.displayValue] as OrderDto
                         orderList.add(orderDto)
+                        order.orderItem.each {
+                            def orderItemDto = [goodsName:it.goods.goodName,count:it.count,totalPrice:it.totalPrice] as OrderItemDto
+                            orderDto.orderItemDtoList.add(orderItemDto)
+                        }
                     }
                     orderPrint.hasPrint = true
                     orderPrint.save(flush: true)
@@ -222,7 +225,9 @@ class OrderController {
 
     def getReminderOrderCount() {
         try {
-            render(OrderReminderUtils.getReminderCount(), contentType: "text/plain", encoding: "utf-8")
+            def result = OrderReminderUtils.getReminderCount()
+            OrderReminderUtils.clearReminderCount()
+            render result
         }
         catch (Exception e) {
             log.error("getReminderOrderCount error",e)

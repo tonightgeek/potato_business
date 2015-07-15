@@ -7,8 +7,8 @@
     <asset:javascript src="admin/order.js"></asset:javascript>
 </head>
 <body>
-    <div class="page-header">
-        <button class="btn btn-primary" id="create-order-button">
+    <div class="page-header" style="">
+        <button class="btn btn-primary" onclick="openCreateOrderDialog()">
             创建订单
         </button>
         <g:if test="${needPrintCount>0}">
@@ -16,6 +16,9 @@
                 ${needPrintCount}个订单未打印
             </button>
         </g:if>
+        <span class="pull-right" style="padding-right: 7px;line-height: 50px;font-size: 20px;color: red;" id="orderReminder">
+
+        </span>
     </div>
     <div class="row">
         <div class="col-xs-12">
