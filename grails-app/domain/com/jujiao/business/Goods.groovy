@@ -12,6 +12,9 @@ class Goods {
     int inventory
     GoodsStatus goodsStatus = GoodsStatus.ON_SALE
 
+    boolean needSauce
+    boolean needDrink
+
     Date dateCreated
     Date lastUpdated
 
@@ -40,5 +43,7 @@ class Goods {
         autoTimestamp true
         sort dateCreated: "desc"
         inventory defaultValue:0
+        needSauce defaultValue:false
+        needDrink defaultValue:false
     }
 }
