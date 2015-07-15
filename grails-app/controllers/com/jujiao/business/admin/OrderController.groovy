@@ -107,7 +107,7 @@ class OrderController {
                 def orderDto = [code    : order.code, totalPrice: order.totalPrice,
                                 address : order.address, phone: order.phone, dateCreated: order.dateCreated.format("yyyy-MM-dd HH:mm:ss"),
                                 sendDate: order.sendDate.format("yyyy-MM-dd HH:mm:ss"), contactName: order.contactName, orderStatus: order.orderStatus.displayValue
-                ,orderSource:order.orderSource.displayValue,hasPrinted:order.hasPrinted
+                ,orderSource:order.orderSource.displayValue,hasPrinted:order.hasPrinted,isMemberFirstOrder:order.isMemberFirstOrder
                 ] as OrderDto
                 orderDtoList.add(orderDto)
             }

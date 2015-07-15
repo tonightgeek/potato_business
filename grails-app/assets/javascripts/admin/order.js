@@ -309,11 +309,16 @@ function initOrderTable(tableId) {
             },
             "columns":[
                 {"data":function(row, type, val, meta){
+                    var result = "";
+                    if(row.isMemberFirstOrder) {
+                        result += "<span style='color: red;'>电&nbsp;</span>";
+                    }
+
                     if(row.hasPrinted == false) {
-                        return "<img src='"+getApplicationContext()+"/assets/gif012.gif'></img>"+row.contactName
+                        return result+ "<img src='"+getApplicationContext()+"/assets/gif012.gif'></img>"+row.contactName
                     }
                     else {
-                        return row.contactName
+                        return result+ row.contactName
                     }
                 },"searchable":false,orderable:false},
                 {"data":function(row, type, val, meta) {

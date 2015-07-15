@@ -16,6 +16,7 @@ class Orders {
     String cancelReason
 
     boolean hasPrinted = false
+    boolean isMemberFirstOrder = false
 
     Member member
     static hasMany = [orderItem:OrderItem]
@@ -60,6 +61,11 @@ class Orders {
     def afterInsert = {
         def orderPrint = new OrderPrint(orderCode: this.code,hasPrint: false)
         orderPrint.save()
+
+        if(Orders.countByMemberAndIsMemberFirstOrder(this.member,true)==0){
+            this.isMemberFirstOrder =true
+        }
+
         OrderReminderUtils.increaseReminder()
     }
 

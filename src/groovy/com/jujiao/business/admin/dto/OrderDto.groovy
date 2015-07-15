@@ -13,5 +13,6 @@ class OrderDto {
     String orderStatus
     String remark
     boolean hasPrinted
+    boolean isMemberFirstOrder
     def orderItemDtoList = [].withLazyDefault {return new OrderItemDto()}
 }

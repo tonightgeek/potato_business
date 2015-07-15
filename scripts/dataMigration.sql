@@ -1,1 +1,1 @@
-alter table orders add column has_printed bit not null
+alter table orders add column is_member_first_order bit not null default false;
