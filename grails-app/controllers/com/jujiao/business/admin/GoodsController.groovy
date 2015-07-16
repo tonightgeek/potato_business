@@ -113,6 +113,15 @@ class GoodsController {
                     goodName: params.names, basePrice: params.basePrice,salePrice:params.salePrice, description: params.description,
                     inventory: params.inventory
             )
+
+            if (params.needSauce) {
+                goods.needSauce = true
+            }
+
+            if (params.needDrink) {
+                goods.needDrink = true
+            }
+
             goods.save()
 
             def file = request.getFile('file')

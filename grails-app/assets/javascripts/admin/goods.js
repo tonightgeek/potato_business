@@ -10,6 +10,14 @@ $(document).ready(
                 $("#goods-sales-price").val("");
                 $("#goods-base-price").val("");
                 $("#goods-description-input").val("");
+                $("#needDrink").val("");
+                $("#needSauce").val("");
+
+                $("#select_sauce").attr("aria-pressed", false);
+                $("#select_sauce").removeClass("active");
+                $("#select_drink").attr("aria-pressed", false);
+                $("#select_drink").removeClass("active");
+
                 $("#addGoodsDialog").dialog(
                     {
                         modal:true,
@@ -75,13 +83,6 @@ function initTable(tableId) {
 
 function changeGoodStatus(element) {
     var elements = ['status_on_sale','status_off_sale','status_over_sale'];
-    //if($(element).hasClass("active")){
-    //    $(element).attr("aria-pressed", false);
-    //    $(element).removeClass("active");
-    //}else {
-    //    $(element).attr("aria-pressed", true);
-    //    $(element).addClass("active");
-    //}
     for(var i = 0;i<elements.length;i++) {
         var eleId = elements[i];
         if(eleId != $(element).attr("id")){
@@ -111,6 +112,27 @@ function editGoods(code) {
                 $("#status_off_sale").removeClass("active");
                 $("#status_over_sale").attr("aria-pressed", false);
                 $("#status_over_sale").removeClass("active");
+                $("#" +
+                "").attr("aria-pressed", false);
+                $("#editSelectSauce").removeClass("active");
+                $("#editSelectDrink").attr("aria-pressed", false);
+                $("#editSelectDrink").removeClass("active");
+                $("#editSelectSauceHidden").val("");
+                $("#editSelectDrinkHidden").val("");
+
+                if(data.data.needSauce){
+                    $("#editSelectSauce").attr("aria-pressed", true);
+                    $("#editSelectSauce").addClass("active");
+                    $("#editSelectSauceHidden").val("true")
+                }
+
+                if(data.data.needDrink){
+                    $("#editSelectDrink").attr("aria-pressed", true);
+                    $("#editSelectDrink").addClass("active");
+                    $("#editSelectDrinkHidden").val("true")
+                }
+
+
                 $("#edit-goods-img-path").attr("src", getApplicationContext()+'/'+data.data.iconPath);
                 if(data.data.status == '在售')
                 {
@@ -179,4 +201,38 @@ function onsale(goodCode) {
     $.getJSON(getApplicationContext()+"/admin/goods/onsale",{code:goodCode},function(data) {
         location.reload()
     });
+}
+
+function changeNeedSauce(ele) {
+    if($(ele).attr("aria-pressed") == "true"){
+        $("#needSauce").val("")
+    }else {
+        $("#needSauce").val("true")
+    }
+}
+
+function changeNeedDrink(ele) {
+    if($(ele).attr("aria-pressed") == "true"){
+        $("#needDrink").val("")
+    }else {
+        $("#needDrink").val("true")
+    }
+}
+
+
+function changeEditNeedSauce(ele) {
+    if($(ele).attr("aria-pressed") == "true"){
+        $("#editSelecxSauceHidden").val("")
+    }else {
+        $("#editSelectSauceHidden").val("true")
+    }
+}
+
+function changeEditNeedDrink(ele) {
+    if($(ele).attr("aria-pressed") == "true"){
+        $("#editSelectDrinkHidden").val("")
+    }else {
+
+        $("#editSelectDrinkHidden").val("true")
+    }
 }

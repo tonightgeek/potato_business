@@ -25,6 +25,9 @@ class GoodsService {
                 goods.goodsStatus = Goods.GoodsStatus.OVER_SALE
             }
 
+            goods.needSauce = params.needSauce
+            goods.needDrink = params.needDrink
+
             def file = request.getFile('file')
             if (file && file.getSize() > 0) {
                 def originalPath = goods.iconPath

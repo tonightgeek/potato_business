@@ -68,6 +68,15 @@
                 <input type="text" name="inventory" class="form-control" value="0" id="goods-inventory-input"></input>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">定制化</label>
+            <div class="col-sm-8">
+                <button class="btn btn-warning" data-toggle="button" id="select_sauce" onclick="changeNeedSauce(this)">酱料可选</button>
+                <button class="btn btn-warning" data-toggle="button" id="select_drink" onclick="changeNeedDrink(this)">饮品可选</button>
+            </div>
+            <input type="hidden" id="needSauce" name="needSauce"/>
+            <input type="hidden" id="needDrink" name="needDrink"/>
+        </div>
 
 
         <div class="form-group">
@@ -131,6 +140,17 @@
             </div>
             <input type="hidden" id="editGoodsStatus" name="goodsStatus"/>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">定制化</label>
+            <div class="col-sm-8">
+                <button class="btn btn-warning" data-toggle="button" id="editSelectSauce" onclick="changeEditNeedSauce(this)">酱料可选</button>
+                <button class="btn btn-warning" data-toggle="button" id="editSelectDrink" onclick="changeEditNeedDrink(this)">饮品可选</button>
+            </div>
+            <input type="hidden" id="editSelectSauceHidden" name="needSauce"/>
+            <input type="hidden" id="editSelectDrinkHidden" name="needDrink"/>
+        </div>
+
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="edit-goods-image">商品照片</label>
 
